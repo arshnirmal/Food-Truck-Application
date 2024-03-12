@@ -9,5 +9,4 @@ public class FoodTruckBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FoodTruckBackendApplication.class, args);
 	}
-
 }
