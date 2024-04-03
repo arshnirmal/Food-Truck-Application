@@ -3,7 +3,6 @@ package dev.arshnirmal.foodtruckbackend.services;
 import io.jsonwebtoken.Claims;
 
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +16,7 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-    private static final String SECRET_KEY = "04ed405e4f668ae53d280927825a0f872794ae37cfc765c169069bc81149abbd";
+    private static final String SECRET_KEY = "d2f61307a7492a651f66e87a927511e74cb9aa0ef247bcd18b2e15e5ea66b89c";
 
     public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -31,7 +30,7 @@ public class JwtService {
         return claimsResolver.apply(extractAllClaims(token));
     }
 
-    private Claims extractAllClaims(String token) {
+    private Claims  extractAllClaims(String token) {
         return Jwts
                 .parser()
                 .verifyWith(getSecretKey())
@@ -47,12 +46,18 @@ public class JwtService {
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         return Jwts
                 .builder()
-                .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
-                .signWith(getSecretKey(), SignatureAlgorithm.HS256)
+                .claims(extraClaims)
+                .subject(userDetails.getUsername())
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .signWith(getSecretKey(),Jwts.SIG.HS256)
                 .compact();
+//                .setClaims(extraClaims)
+//                .setSubject(userDetails.getUsername())
+//                .setIssuedAt(new Date(System.currentTimeMillis()))
+//                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+//                .signWith(getSecretKey(), SignatureAlgorithm.HS256)
+//                .compact();
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
