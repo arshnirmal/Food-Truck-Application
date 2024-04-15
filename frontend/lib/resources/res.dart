@@ -1,11 +1,20 @@
 class Resources {
   static Images images = Images();
+  static Fonts fonts = Fonts();
+  static Strings strings = Strings();
 }
 
 class Images {
-  String logo = 'assets/images/app_logo.png';
-  String splashScreen = 'assets/images/splashscreen.svg';
+  String splashScreenBottom = 'assets/images/splashscreen_bottom.svg';
+  String splashScreenTop = 'assets/images/splashscreen_top.svg';
   String appName = 'assets/images/app_name.svg';
-  String onboarding1 = 'assets/images/onboarding_1.svg';
-  String onboarding2 = 'assets/images/onboarding_2.svg';
+}
+
+class Fonts {
+  String primaryFont = 'Sen';
+  String secondaryFont = 'Roboto';
+}
+
+class Strings {
+  String appName = 'Urban Bites';
 }

@@ -32,6 +32,6 @@ flutter:
     - assets/images/
 
   fonts:
-    - family: BentonSans
+    - family: Sen
       fonts:
-        - asset: assets/fonts/BentonSans Comp Black Regular.otf
+        - asset: assets/fonts/Sen/Sen-VariableFont_wght.ttf

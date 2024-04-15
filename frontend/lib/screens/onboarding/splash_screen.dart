@@ -1,44 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_truck/resources/res.dart';
-import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Future.delayed(
-        const Duration(seconds: 2),
-        () => context.pushReplacement('/onboarding1'),
-      ),
-      builder: (context, snapshot) {
-        return Scaffold(
-          body: Stack(
-            children: [
-              SvgPicture.asset(
-                Resources.images.splashScreen,
-              ),
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      Resources.images.logo,
-                      height: 139,
-                      width: 175,
-                    ),
-                    SvgPicture.asset(
-                      Resources.images.appName,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      },
+    return Scaffold(
+      // body: SafeArea(
+      //   child: Stack(
+      //     alignment: Alignment.center,
+      //     children: [
+      //       SvgPicture.asset(
+      //         Resources.images.appName,
+      //         height: 60,
+      //       ),
+      //       Column(
+      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //         children: [
+      //           Align(
+      //             alignment: Alignment.centerLeft,
+      //             child: SvgPicture.asset(
+      //               Resources.images.splashScreenTop,
+      //               height: 100,
+      //             ),
+      //           ),
+      //           Align(
+      //             alignment: Alignment.centerRight,
+      //             child: SvgPicture.asset(
+      //               Resources.images.splashScreenBottom,
+      //               height: 300,
+      //             ),
+      //           ),
+      //         ],
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
