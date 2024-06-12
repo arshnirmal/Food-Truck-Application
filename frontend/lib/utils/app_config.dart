@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_truck/resources/res.dart';
 import 'package:food_truck/screens/auth/login_screen.dart';
 import 'package:food_truck/screens/auth/signup_sceen.dart';
 import 'package:food_truck/screens/onboarding/onboarding_screen.dart';
@@ -10,28 +11,37 @@ class AppRouter {
     initialLocation: '/',
     routes: [
       GoRoute(
-        path: '/',
+        path: R.routes.splashscreen,
         builder: (context, state) => const SplashScreen(),
       ),
       GoRoute(
-        path: '/onboarding1',
-        builder: (context, state) => const OnboardingScreen1(),
+        path: R.routes.onboarding1,
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+          key: state.pageKey,
+          child: const OnboardingScreen1(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(opacity: animation, child: child),
+        ), 
       ),
       GoRoute(
-        path: '/onboarding2',
-        pageBuilder: (context, state) {
-          return CustomSlideTransition(
-            child: const OnboardingScreen2(),
-          );
-        },
-        // builder: (context, state) => const OnboardingScreen2(),
+        path: R.routes.onboarding2,
+        pageBuilder: (context, state) => CustomSlideTransition(
+          key: state.pageKey,
+          child: const OnboardingScreen2(),
+        ),
       ),
       GoRoute(
-        path: '/signup',
+        path: R.routes.onboarding3,
+        pageBuilder: (context, state) => CustomSlideTransition(
+          key: state.pageKey,
+          child: const OnboardingScreen3(),
+        ),
+      ),
+      GoRoute(
+        path: R.routes.signup,
         builder: (context, state) => const SignUpScreen(),
       ),
       GoRoute(
-        path: '/login',
+        path: R.routes.login,
         builder: (context, state) => const LoginScreen(),
       ),
     ],
@@ -39,17 +49,18 @@ class AppRouter {
 }
 
 class CustomSlideTransition extends CustomTransitionPage<void> {
-  CustomSlideTransition({super.key, required super.child})
+  CustomSlideTransition({Key? key, required super.child})
       : super(
           transitionDuration: const Duration(milliseconds: 250),
           transitionsBuilder: (_, animation, __, child) {
             return SlideTransition(
-              position: animation.drive(
-                Tween(
-                  begin: const Offset(1.5, 0),
-                  end: Offset.zero,
-                ).chain(
-                  CurveTween(curve: Curves.ease),
+              position: Tween<Offset>(
+                begin: const Offset(1.0, 0),
+                end: Offset.zero,
+              ).animate(
+                CurvedAnimation(
+                  parent: animation,
+                  curve: Curves.easeOut,
                 ),
               ),
               child: child,
