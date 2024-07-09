@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "329902579675",
+    "project_id": "food-truck-f524e",
+    "storage_bucket": "food-truck-f524e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329902579675:android:63a82489228e859d79d1fe",
+        "android_client_info": {
+          "package_name": "com.example.food_truck"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEGINPydP16xS8EKLCHX77OxkA8PzlvEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
