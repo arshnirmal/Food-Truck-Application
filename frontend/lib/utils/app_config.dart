@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_truck/resources/res.dart';
+import 'package:food_truck/screens/auth/forgot_passowrd_screen.dart';
 import 'package:food_truck/screens/auth/login_screen.dart';
 import 'package:food_truck/screens/auth/signup_sceen.dart';
 import 'package:food_truck/screens/onboarding/onboarding_screen.dart';
@@ -15,26 +16,8 @@ class AppRouter {
         builder: (context, state) => const SplashScreen(),
       ),
       GoRoute(
-        path: R.routes.onboarding1,
-        pageBuilder: (context, state) => CustomTransitionPage<void>(
-          key: state.pageKey,
-          child: const OnboardingScreen1(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(opacity: animation, child: child),
-        ), 
-      ),
-      GoRoute(
-        path: R.routes.onboarding2,
-        pageBuilder: (context, state) => CustomSlideTransition(
-          key: state.pageKey,
-          child: const OnboardingScreen2(),
-        ),
-      ),
-      GoRoute(
-        path: R.routes.onboarding3,
-        pageBuilder: (context, state) => CustomSlideTransition(
-          key: state.pageKey,
-          child: const OnboardingScreen3(),
-        ),
+        path: R.routes.onboarding,
+        builder: (context, state) => const OnboardingScreen(),
       ),
       GoRoute(
         path: R.routes.signup,
@@ -43,6 +26,10 @@ class AppRouter {
       GoRoute(
         path: R.routes.login,
         builder: (context, state) => const LoginScreen(),
+      ),
+      GoRoute(
+        path: R.routes.forgotPassword,
+        builder: (context, state) => const ForgotPassowrdScreen(),
       ),
     ],
   );

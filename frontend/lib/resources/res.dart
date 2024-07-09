@@ -27,6 +27,7 @@ class Iconx {
   String facebook = 'assets/icons/facebook.svg';
   String apple = 'assets/icons/apple.svg';
   String x = 'assets/icons/x.svg';
+  String roundedBackButton = 'assets/icons/rounded_back_button.svg';
 }
 
 class Fonts {
@@ -40,9 +41,7 @@ class Strings {
 
 class Routes {
   String splashscreen = '/';
-  String onboarding1 = '/onboarding1';
-  String onboarding2 = '/onboarding2';
-  String onboarding3 = '/onboarding3';
+  String onboarding = '/onboarding';
   String signup = '/signup';
   String login = '/login';
   String forgotPassword = '/forgot-password';

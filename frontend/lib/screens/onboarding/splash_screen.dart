@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_truck/resources/res.dart';
-import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -22,11 +21,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       duration: const Duration(seconds: 1),
     );
 
-    _controller.forward().whenComplete(
-          () => context.pushReplacement(
-            R.routes.onboarding1,
-          ),
-        );
+    _controller.forward();
   }
 
   @override

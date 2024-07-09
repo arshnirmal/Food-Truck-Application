@@ -3,6 +3,73 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_truck/resources/res.dart';
 import 'package:go_router/go_router.dart';
 
+class AuthHeader extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final Widget authFooter;
+  const AuthHeader({super.key, required this.title, required this.subtitle, required this.authFooter});
+
+  @override
+  Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+
+    return Scaffold(
+      backgroundColor: R.colors.darkblue,
+      body: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SvgPicture.asset(
+                R.images.loginTop2,
+                height: 96,
+              ),
+              SvgPicture.asset(
+                R.images.loginTop,
+                height: height * 0.4,
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              SizedBox(height: height * 0.13),
+              Text(
+                title,
+                style: R.textStyles.fz30.merge(R.textStyles.fw700.merge(R.textStyles.fcWhite)),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                subtitle,
+                style: R.textStyles.fz16.merge(R.textStyles.fw400.merge(R.textStyles.fcWhite)),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: height * 0.74,
+              width: double.infinity,
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: R.colors.white,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  topRight: Radius.circular(24),
+                ),
+              ),
+              child: authFooter,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class AuthButton extends StatelessWidget {
   const AuthButton({
     super.key,
@@ -101,12 +168,18 @@ class OnboardingScreenWidget extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              AuthButton(height: 62, text: index == 2 ? 'GET STARTED' : 'NEXT', onPressed: onPressed),
+              AuthButton(
+                height: 62,
+                text: index == 2 ? 'GET STARTED' : 'NEXT',
+                onPressed: onPressed,
+              ),
               index == 2
-                  ? const SizedBox()
+                  ? const SizedBox(
+                      height: 48,
+                    )
                   : TextButton(
                       onPressed: () {
-                        context.push(R.routes.login);
+                        context.pushReplacement(R.routes.login);
                       },
                       child: Text(
                         'Skip',
