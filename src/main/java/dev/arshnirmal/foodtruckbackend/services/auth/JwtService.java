@@ -1,11 +1,9 @@
-package dev.arshnirmal.foodtruckbackend.services;
+package dev.arshnirmal.foodtruckbackend.services.auth;
 
 import io.jsonwebtoken.Claims;
-
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -53,12 +51,6 @@ public class JwtService {
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .signWith(getSecretKey(),Jwts.SIG.HS256)
                 .compact();
-//                .setClaims(extraClaims)
-//                .setSubject(userDetails.getUsername())
-//                .setIssuedAt(new Date(System.currentTimeMillis()))
-//                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
-//                .signWith(getSecretKey(), SignatureAlgorithm.HS256)
-//                .compact();
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {

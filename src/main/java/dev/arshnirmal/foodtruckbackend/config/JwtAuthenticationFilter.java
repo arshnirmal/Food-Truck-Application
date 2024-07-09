@@ -1,6 +1,6 @@
 package dev.arshnirmal.foodtruckbackend.config;
 
-import dev.arshnirmal.foodtruckbackend.services.JwtService;
+import dev.arshnirmal.foodtruckbackend.services.auth.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

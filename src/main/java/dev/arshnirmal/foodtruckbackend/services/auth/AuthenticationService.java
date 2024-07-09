@@ -1,10 +1,6 @@
-package dev.arshnirmal.foodtruckbackend.services;
+package dev.arshnirmal.foodtruckbackend.services.auth;
 
-import dev.arshnirmal.foodtruckbackend.models.AuthenticationRequest;
-import dev.arshnirmal.foodtruckbackend.models.AuthenticationResponse;
-import dev.arshnirmal.foodtruckbackend.models.RegisterRequest;
-import dev.arshnirmal.foodtruckbackend.models.Role;
-import dev.arshnirmal.foodtruckbackend.models.User;
+import dev.arshnirmal.foodtruckbackend.models.*;
 import dev.arshnirmal.foodtruckbackend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
