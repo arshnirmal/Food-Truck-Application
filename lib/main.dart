@@ -1,15 +1,14 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_truck/models/user_repository.dart';
 import 'package:food_truck/resources/res.dart';
 import 'package:food_truck/screens/auth/authentication_repository.dart';
 import 'package:food_truck/screens/auth/bloc/authentication_bloc.dart';
+import 'package:food_truck/services/notification_service.dart';
 import 'package:food_truck/utils/app_config.dart';
 
 import 'firebase_options.dart';
@@ -22,56 +21,16 @@ Future<void> main() async {
         options: DefaultFirebaseOptions.currentPlatform,
       );
 
-      requestNotificationPermissions();
-
-      final fcmToken = await FirebaseMessaging.instance.getToken();
-      await FirebaseMessaging.instance.setAutoInitEnabled(true);
-      log("FCMToken $fcmToken");
-
-      FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-      await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-        alert: true,
-        badge: true,
-        sound: true,
-      );
-
       runApp(const App());
     },
     (error, stackTrace) {
-      FirebaseAnalytics.instance.logEvent(name: 'error', parameters: {
+      FirebaseAnalytics.instance.logEvent(name: 'main', parameters: {
         'error': error.toString(),
         'stackTrace': stackTrace.toString(),
       });
     },
   );
 }
-
-void requestNotificationPermissions() async {
-  await FirebaseMessaging.instance.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
-}
-
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-  log('Handling a background message ${message.messageId}');
-}
-
-// const AndroidNotificationChannel channel = AndroidNotificationChannel(
-//   'high_importance_channel', // id
-//   'High Importance Notifications', // title
-//   description: 'This channel is used for important notifications.', // description
-//   sound: RawResourceAndroidNotificationSound('efnotificationsound'),
-//   playSound: true,
-//   importance: Importance.high,
-// );
-// final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -83,12 +42,18 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   late final AuthenticationRepository _authenticationRepository;
   late final UserRepository _userRepository;
+  final NotificationService _notificationService = NotificationService();
 
   @override
   void initState() {
     super.initState();
     _authenticationRepository = AuthenticationRepository();
     _userRepository = UserRepository();
+
+    _notificationService.requestNotificationPermissions();
+    _notificationService.initLocalNotification();
+    _notificationService.initFirebaseMessaging();
+    _notificationService.tokenRefresh();
   }
 
   @override
