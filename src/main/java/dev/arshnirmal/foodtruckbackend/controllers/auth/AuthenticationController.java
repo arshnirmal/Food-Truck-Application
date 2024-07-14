@@ -1,20 +1,23 @@
 package dev.arshnirmal.foodtruckbackend.controllers.auth;
 
-import dev.arshnirmal.foodtruckbackend.models.AuthenticationRequest;
-import dev.arshnirmal.foodtruckbackend.models.AuthenticationResponse;
-import dev.arshnirmal.foodtruckbackend.models.RegisterRequest;
+import dev.arshnirmal.foodtruckbackend.models.auth.AuthenticationResponse;
+import dev.arshnirmal.foodtruckbackend.models.auth.LoginRequest;
+import dev.arshnirmal.foodtruckbackend.models.auth.PasswordResetResponse;
+import dev.arshnirmal.foodtruckbackend.models.auth.RegisterRequest;
+import dev.arshnirmal.foodtruckbackend.services.UserService;
 import dev.arshnirmal.foodtruckbackend.services.auth.AuthenticationService;
-import dev.arshnirmal.foodtruckbackend.services.auth.PasswordResetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
-    private final PasswordResetService passwordResetService;
+    private final UserService userService;
 
     @GetMapping("/")
     public ResponseEntity<String> demo() {
@@ -23,25 +26,50 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
-        var response = authenticationService.register(request);
-        if (response.getToken().equals("User already exists")) {
-            return ResponseEntity.status(409).body(response); // Conflict status if user already exists
+        try {
+            var response = authenticationService.register(request);
+            userService.updateFcmToken(request.getEmail(), request.getFcmToken());
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(AuthenticationResponse.builder()
+                    .token("")
+                    .errorMessage("User already exists")
+                    .build()
+            );
         }
-        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest request) {
-        var response = authenticationService.authenticate(request);
-        if (response.getToken().equals("Invalid credentials")) {
-            return ResponseEntity.status(401).body(response); // Unauthorized status if credentials are invalid
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginRequest request) {
+        try {
+            var response = authenticationService.login(request);
+            userService.updateFcmToken(request.getEmail(), request.getFcmToken());
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(AuthenticationResponse.builder()
+                    .token("")
+                    .errorMessage("Invalid credentials")
+                    .build()
+            );
         }
-        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<String> resetPassword(@RequestBody String email) {
-        var code = passwordResetService.sendVerificationCode(email);
-        return ResponseEntity.ok(code);
+    public ResponseEntity<PasswordResetResponse> resetPassword(@RequestBody Map<String, String> request) {
+        try {
+            var email = request.get("email");
+            var code = authenticationService.reset_password(email);
+            return ResponseEntity.ok().body(PasswordResetResponse.builder()
+                    .verificationCode(code)
+                    .errorMessage("")
+                    .build()
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(PasswordResetResponse.builder()
+                    .verificationCode("")
+                    .errorMessage("User not found")
+                    .build()
+            );
+        }
     }
 }

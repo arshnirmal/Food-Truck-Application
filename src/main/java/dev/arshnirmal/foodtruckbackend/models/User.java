@@ -22,15 +22,11 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue
     private Integer id;
-
     private String firstName;
-
     private String lastName;
-
     private String password;
-
     private String email;
-
+    private String fcmToken;
     @Enumerated(EnumType.STRING)
     private Role role;
 

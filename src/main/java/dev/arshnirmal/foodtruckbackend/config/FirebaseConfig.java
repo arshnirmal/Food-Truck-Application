@@ -15,14 +15,12 @@ public class FirebaseConfig {
 
     @Bean
     public FirebaseApp firebaseApp() throws IOException {
-        FileInputStream serviceAccount =
-                new FileInputStream("food-truck-f524e-firebase-adminsdk-2szft-579d5d1f9c.json");
+        FileInputStream serviceAccount = new FileInputStream(
+                "food-truck-f524e-firebase-adminsdk-2szft-579d5d1f9c.json");
 
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .build();
+        FirebaseOptions.builder().setCredentials(GoogleCredentials.fromStream(serviceAccount)).build();
 
-        return FirebaseApp.initializeApp(options);
+        return FirebaseApp.initializeApp();
     }
 
     @Bean

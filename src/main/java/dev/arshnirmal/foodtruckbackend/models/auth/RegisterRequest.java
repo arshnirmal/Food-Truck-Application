@@ -1,4 +1,4 @@
-package dev.arshnirmal.foodtruckbackend.models;
+package dev.arshnirmal.foodtruckbackend.models.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,5 +14,5 @@ public class RegisterRequest {
     private String password;
     private String firstName;
     private String lastName;
-
+    private String fcmToken;
 }
