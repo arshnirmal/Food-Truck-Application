@@ -1,1 +1,21 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"food-truck-f524e","appId":"1:329902579675:android:63a82489228e859d79d1fe","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"food-truck-f524e","configurations":{"android":"1:329902579675:android:63a82489228e859d79d1fe"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "food-truck-f524e",
+          "appId": "1:329902579675:android:63a82489228e859d79d1fe",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "food-truck-f524e",
+          "configurations": {
+            "android": "1:329902579675:android:63a82489228e859d79d1fe"
+          }
+        }
+      }
+    }
+  }
+}

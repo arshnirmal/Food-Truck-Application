@@ -1,4 +1,9 @@
+import 'dart:async';
+import 'dart:developer';
+
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_truck/models/user_repository.dart';
@@ -10,11 +15,63 @@ import 'package:food_truck/utils/app_config.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+  runZonedGuarded(
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+
+      requestNotificationPermissions();
+
+      final fcmToken = await FirebaseMessaging.instance.getToken();
+      await FirebaseMessaging.instance.setAutoInitEnabled(true);
+      log("FCMToken $fcmToken");
+
+      FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+      await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+
+      runApp(const App());
+    },
+    (error, stackTrace) {
+      FirebaseAnalytics.instance.logEvent(name: 'error', parameters: {
+        'error': error.toString(),
+        'stackTrace': stackTrace.toString(),
+      });
+    },
   );
-  runApp(const App());
 }
+
+void requestNotificationPermissions() async {
+  await FirebaseMessaging.instance.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  log('Handling a background message ${message.messageId}');
+}
+
+// const AndroidNotificationChannel channel = AndroidNotificationChannel(
+//   'high_importance_channel', // id
+//   'High Importance Notifications', // title
+//   description: 'This channel is used for important notifications.', // description
+//   sound: RawResourceAndroidNotificationSound('efnotificationsound'),
+//   playSound: true,
+//   importance: Importance.high,
+// );
+// final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 class App extends StatefulWidget {
   const App({super.key});
