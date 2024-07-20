@@ -4,12 +4,13 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_truck/controllers/authentication_repository.dart';
 import 'package:food_truck/models/user_repository.dart';
 import 'package:food_truck/resources/res.dart';
-import 'package:food_truck/screens/auth/authentication_repository.dart';
 import 'package:food_truck/screens/auth/bloc/authentication_bloc.dart';
-import 'package:food_truck/services/notification_service.dart';
+import 'package:food_truck/services/firebase/notification_service.dart';
 import 'package:food_truck/utils/app_config.dart';
+import 'package:food_truck/utils/service_locator.dart';
 
 import 'firebase_options.dart';
 
@@ -20,6 +21,7 @@ Future<void> main() async {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
+      setup();
 
       runApp(const App());
     },
