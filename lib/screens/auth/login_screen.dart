@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_truck/resources/res.dart';
-import 'package:food_truck/screens/auth/authentication_repository.dart';
+import 'package:food_truck/controllers/authentication_repository.dart';
 import 'package:food_truck/screens/auth/bloc/login_bloc.dart';
 import 'package:food_truck/utils/utils.dart';
 import 'package:food_truck/widgets/auth_widgets.dart';

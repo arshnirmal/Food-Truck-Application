@@ -1,12 +1,9 @@
 import 'dart:async';
 
-import 'package:dio/dio.dart';
-
 enum AuthenticationStatus { unknown, authenticated, unauthenticated }
 
 class AuthenticationRepository {
   final _controller = StreamController<AuthenticationStatus>();
-  final Dio _dio = Dio();
 
   Stream<AuthenticationStatus> get status async* {
     await Future<void>.delayed(const Duration(seconds: 1));

@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:food_truck/models/user.dart';
 import 'package:food_truck/models/user_repository.dart';
-import 'package:food_truck/screens/auth/authentication_repository.dart';
+import 'package:food_truck/controllers/authentication_repository.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
