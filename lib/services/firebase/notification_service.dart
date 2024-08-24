@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:food_truck/utils/secure_storage.dart';
 
 class NotificationService {
   final FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -48,6 +49,7 @@ class NotificationService {
   Future<void> initFirebaseMessaging() async {
     await messaging.setAutoInitEnabled(true);
     final fcmToken = await messaging.getToken();
+    await SecureStorage().saveFCMToken(fcmToken ?? '');
     log("FCMToken $fcmToken");
 
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
