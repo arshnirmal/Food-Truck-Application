@@ -10,7 +10,7 @@ class DioClient {
   }
 
   Future<void> _initializeDio(String baseUrl) async {
-    final authToken = await SecureStorage().getToken();
+    final authToken = await SecureStorage().getAuthToken();
     _dio = Dio(
       BaseOptions(
         baseUrl: baseUrl,
@@ -124,7 +124,7 @@ class DioClient {
   }
 
   Future<void> unauthorized() async {
-    await SecureStorage().deleteToken();
+    await SecureStorage().deleteAuthToken();
   }
 
   void dispose() {

@@ -21,15 +21,29 @@ class SecureStorage {
 
   // ------------------------------------------------------------------------------------------------------------------------------------------------
 
-  Future<void> saveToken(String token) async {
+  Future<void> saveAuthToken(String token) async {
     await writeSecureData(key: 'auth_token', value: token);
   }
 
-  Future<String?> getToken() async {
+  Future<String?> getAuthToken() async {
     return await readSecureData(key: 'auth_token');
   }
 
-  Future<void> deleteToken() async {
+  Future<void> deleteAuthToken() async {
     await deleteSecureData(key: 'auth_token');
+  }
+
+  // ------------------------------------------------------------------------------------------------------------------------------------------------
+
+  Future<void> saveFCMToken(String token) async {
+    await writeSecureData(key: 'fcm_token', value: token);
+  }
+
+  Future<String?> getFCMToken() async {
+    return await readSecureData(key: 'fcm_token');
+  }
+
+  Future<void> deleteFCMToken() async {
+    await deleteSecureData(key: 'fcm_token');
   }
 }

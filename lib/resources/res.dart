@@ -37,6 +37,8 @@ class Fonts {
 
 class Strings {
   String appName = 'Urban Bites';
+  String devAPI = 'http://localhost:8080';
+  String prodAPI = 'https://food-truck-latest.onrender.com';
 }
 
 class Routes {
