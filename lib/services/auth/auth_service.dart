@@ -1,20 +1,40 @@
 import 'package:dio/dio.dart';
 import 'package:food_truck/models/auth/auth_models.dart';
+import 'package:food_truck/services/firebase/notification_service.dart';
 import 'package:food_truck/utils/dio_client.dart';
+import 'package:food_truck/utils/injection.dart';
+import 'package:food_truck/utils/logger.dart';
+import 'package:injectable/injectable.dart';
 
+@lazySingleton
 class AuthenticationService {
-  final DioClient dioClient;
-  AuthenticationService({required this.dioClient});
+  final _dioClient = getIt<DioClient>();
+  final _notificationService = getIt<NotificationService>();
+  final endpoint = '/auth';
 
-  Future<LoginResponse?> login(LoginRequest loginRequest) async {
+  Future<bool> helloworld() async {
     try {
-      final response = await dioClient.instance.post(
-        '/auth/login',
-        data: loginRequest.toJson(),
+      final res = await _dioClient.get('$endpoint/');
+
+      if (res.statusCode == 200) {
+        logD(res.data);
+        return true;
+      }
+    } on DioException catch (e) {
+      throw Exception(e.response?.data);
+    }
+    return false;
+  }
+
+  Future<AuthResponse?> login(LoginRequest loginRequest) async {
+    try {
+      final response = await _dioClient.post(
+        '$endpoint/login',
+        body: loginRequest.toJson(),
       );
 
-      if (response.statusCode == 200) {
-        return LoginResponse.fromJson(response.data);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return AuthResponse.fromJson(response.data);
       }
     } on DioException catch (e) {
       throw Exception(e.response?.data);
@@ -22,15 +42,15 @@ class AuthenticationService {
     return null;
   }
 
-  Future<RegisterResponse?> register(RegisterRequest registerRequest) async {
+  Future<AuthResponse?> register(RegisterRequest registerRequest) async {
     try {
-      final response = await dioClient.instance.post(
-        '/auth/register',
-        data: registerRequest.toJson(),
+      final response = await _dioClient.post(
+        '$endpoint/register',
+        body: registerRequest.toJson(),
       );
 
-      if (response.statusCode == 200) {
-        return RegisterResponse.fromJson(response.data);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return AuthResponse.fromJson(response.data);
       }
     } on DioException catch (e) {
       throw Exception(e.response?.data);
@@ -38,9 +58,12 @@ class AuthenticationService {
     return null;
   }
 
-  Future<void> logout() async {
+  Future<bool?> logout() async {
     try {
-      await dioClient.updateDioToken('');
+      await _dioClient.updateDioToken('');
+      await _notificationService.killNotification();
+
+      return true;
     } on DioException catch (e) {
       throw Exception(e.response?.data);
     }
@@ -48,12 +71,12 @@ class AuthenticationService {
 
   Future<ForgotPasswordResponse?> forgotPassword(ForgotPasswordRequest forgotPasswordRequest) async {
     try {
-      final response = await dioClient.instance.post(
-        '/auth/forgot-password',
-        data: forgotPasswordRequest.toJson(),
+      final response = await _dioClient.post(
+        '$endpoint/forgot-password',
+        body: forgotPasswordRequest.toJson(),
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         return ForgotPasswordResponse.fromJson(response.data);
       }
     } on DioException catch (e) {

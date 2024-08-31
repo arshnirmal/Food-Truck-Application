@@ -31,6 +31,13 @@ class AppRouter {
         path: R.routes.forgotPassword,
         builder: (context, state) => const ForgotPassowrdScreen(),
       ),
+      GoRoute(
+        path: R.routes.optVerification,
+        builder: (context, state) {
+          final String email = state.extra as String;
+          return OtpVerificationScreen(email: email);
+        },
+      ),
     ],
   );
 }

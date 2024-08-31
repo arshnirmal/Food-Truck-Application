@@ -37,8 +37,8 @@ class Fonts {
 
 class Strings {
   String appName = 'Urban Bites';
-  String devAPI = 'http://localhost:8080';
-  String prodAPI = 'https://food-truck-latest.onrender.com';
+  String devAPI = 'http://192.168.1.21:8080/api';
+  String prodAPI = 'https://food-truck-latest.onrender.com/api';
 }
 
 class Routes {
@@ -47,6 +47,7 @@ class Routes {
   String signup = '/signup';
   String login = '/login';
   String forgotPassword = '/forgot-password';
+  String optVerification = '/otp-verification';
   String home = '/home';
   String profile = '/profile';
   String settings = '/settings';
@@ -96,4 +97,6 @@ class TextStyles {
   final TextStyle fcHintText = TextStyle(color: R.colors.hintText);
   final TextStyle fcCheckBoxOutline = TextStyle(color: R.colors.checkBoxOutline);
   final TextStyle fcTextGrey = TextStyle(color: R.colors.textGrey);
+
+  final TextStyle underline = const TextStyle(decoration: TextDecoration.underline);
 }

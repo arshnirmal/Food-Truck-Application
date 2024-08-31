@@ -4,7 +4,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:food_truck/utils/secure_storage.dart';
+import 'package:injectable/injectable.dart';
 
+@singleton
 class NotificationService {
   final FirebaseMessaging messaging = FirebaseMessaging.instance;
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -110,13 +112,15 @@ class NotificationService {
   }
 
   void tokenRefresh() {
-    messaging.onTokenRefresh.listen((String? token) {
+    messaging.onTokenRefresh.listen((String? token) async {
       log("onTokenRefresh: $token");
+      await SecureStorage().saveFCMToken(token ?? '');
     });
   }
 
   Future<void> killNotification() async {
     await flutterLocalNotificationsPlugin.cancelAll();
     await messaging.deleteToken();
+    await SecureStorage().deleteFCMToken();
   }
 }

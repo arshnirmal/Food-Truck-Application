@@ -46,4 +46,18 @@ class SecureStorage {
   Future<void> deleteFCMToken() async {
     await deleteSecureData(key: 'fcm_token');
   }
+
+  // ------------------------------------------------------------------------------------------------------------------------------------------------
+
+  Future<void> saveOtp(String otp) async {
+    await writeSecureData(key: 'otp', value: otp);
+  }
+
+  Future<String?> getOtp() async {
+    return await readSecureData(key: 'otp');
+  }
+
+  Future<void> deleteOtp() async {
+    await deleteSecureData(key: 'otp');
+  }
 }

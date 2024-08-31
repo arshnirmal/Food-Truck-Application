@@ -1,21 +1,22 @@
 import 'package:dio/dio.dart';
 import 'package:food_truck/utils/logger.dart';
 import 'package:food_truck/utils/secure_storage.dart';
+import 'package:injectable/injectable.dart';
 
+@singleton
 class DioClient {
   late final Dio _dio;
 
-  DioClient(String baseUrl) {
+  DioClient(@Named('baseUrl') String baseUrl) {
     _initializeDio(baseUrl);
   }
 
-  Future<void> _initializeDio(String baseUrl) async {
-    final authToken = await SecureStorage().getAuthToken();
+  _initializeDio(String baseUrl) {
     _dio = Dio(
       BaseOptions(
         baseUrl: baseUrl,
         headers: {
-          'Authorization': 'Bearer $authToken',
+          'Authorization': 'Bearer ${SecureStorage().getAuthToken()}',
         },
         contentType: 'application/json',
       ),
@@ -25,10 +26,11 @@ class DioClient {
   }
 
   void addInterceptors() {
+    _dio.interceptors.clear();
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          logger.d('Request: ${options.method} ${options.path}');
+          logger.d('Request: ${options.method} ${options.baseUrl}${options.path}');
           return handler.next(options);
         },
         onResponse: (response, handler) {
@@ -51,8 +53,6 @@ class DioClient {
     _dio.options.contentType = contentType;
   }
 
-  Dio get instance => _dio;
-
   Future<Response> get(String endPoint, {Map<String, dynamic>? queryParameters}) async {
     try {
       return await _dio.get(endPoint, queryParameters: queryParameters);
@@ -64,7 +64,7 @@ class DioClient {
     }
   }
 
-  Future<Response> postRequest(
+  Future<Response> post(
     String endPoint, {
     Map<String, dynamic>? body,
     FormData? formData,
@@ -88,7 +88,7 @@ class DioClient {
     }
   }
 
-  Future<Response> putRequest(
+  Future<Response> put(
     String endPoint, {
     Map<String, dynamic>? body,
     FormData? formData,
@@ -112,7 +112,7 @@ class DioClient {
     }
   }
 
-  Future<Response> deleteRequest(String endPoint, {Map<String, dynamic>? queryParameters}) async {
+  Future<Response> delete(String endPoint, {Map<String, dynamic>? queryParameters}) async {
     try {
       return await _dio.delete(endPoint, queryParameters: queryParameters);
     } on DioException catch (e) {

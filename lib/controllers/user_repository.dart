@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:food_truck/models/user.dart';
+import 'package:injectable/injectable.dart';
 
+@lazySingleton
 class UserRepository {
   User? _user;
 

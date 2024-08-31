@@ -6,78 +6,127 @@ import 'package:go_router/go_router.dart';
 class AuthHeader extends StatelessWidget {
   final String title;
   final String subtitle;
-  final Widget authFooter;
-  const AuthHeader({super.key, required this.title, required this.subtitle, required this.authFooter});
+  final bool isBackButton;
+  final String? verificationEmail;
+  final Function? backButtonOnPressed;
+
+  const AuthHeader({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    this.isBackButton = false,
+    this.verificationEmail,
+    this.backButtonOnPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
 
-    return Stack(
-      alignment: Alignment.topCenter,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SvgPicture.asset(
-              R.images.loginTop2,
-              height: 96,
-            ),
-            SvgPicture.asset(
-              R.images.loginTop,
-              height: height * 0.4,
-            ),
-          ],
-        ),
-        Column(
-          children: [
-            SizedBox(height: height * 0.13),
-            Text(
-              title,
-              style: R.textStyles.fz30.merge(R.textStyles.fw700.merge(R.textStyles.fcWhite)),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              subtitle,
-              style: R.textStyles.fz16.merge(R.textStyles.fw400.merge(R.textStyles.fcWhite)),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            height: height * 0.74,
-            width: double.infinity,
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: R.colors.white,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(24),
-                topRight: Radius.circular(24),
+    return SizedBox(
+      height: height * 0.25,
+      width: double.infinity,
+      child: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SvgPicture.asset(
+                R.images.loginTop2,
+                height: height * 0.15,
               ),
-            ),
-            child: authFooter,
+              SvgPicture.asset(
+                R.images.loginTop,
+                height: height * 0.25,
+              ),
+            ],
           ),
-        ),
-      ],
+          Column(
+            children: [
+              SizedBox(height: height * 0.13),
+              Text(
+                title,
+                style: R.textStyles.fz30.merge(R.textStyles.fw700.merge(R.textStyles.fcWhite)),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                subtitle,
+                style: R.textStyles.fz16.merge(R.textStyles.fw400.merge(R.textStyles.fcWhite)),
+                textAlign: TextAlign.center,
+              ),
+              verificationEmail != null
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Text(
+                        '$verificationEmail',
+                        style: R.textStyles.fz16.merge(R.textStyles.fw700.merge(R.textStyles.fcWhite)),
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  : const SizedBox(),
+            ],
+          ),
+          isBackButton
+              ? Positioned(
+                  top: height * 0.04,
+                  left: 12,
+                  child: IconButton(
+                    icon: SvgPicture.asset(
+                      R.icons.roundedBackButton,
+                      width: 45,
+                      height: 45,
+                    ),
+                    onPressed: () {
+                      backButtonOnPressed ?? context.pop();
+                    },
+                  ),
+                )
+              : const SizedBox(),
+        ],
+      ),
     );
   }
 }
 
-class AuthButton extends StatelessWidget {
-  const AuthButton({
+class AuthBody extends StatelessWidget {
+  final Widget child;
+  const AuthBody({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: R.colors.white,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(24),
+            topRight: Radius.circular(24),
+          ),
+        ),
+        padding: const EdgeInsets.all(24),
+        child: child,
+      ),
+    );
+  }
+}
+
+class AuthButtonWidget extends StatelessWidget {
+  const AuthButtonWidget({
     super.key,
     required this.height,
     required this.text,
     required this.onPressed,
+    this.isSubmitting = false,
   });
 
   final double height;
   final String text;
   final Function onPressed;
+  final bool isSubmitting;
 
   @override
   Widget build(BuildContext context) {
@@ -95,10 +144,16 @@ class AuthButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
         ),
-        child: Text(
-          text,
-          style: R.textStyles.fz14.merge(R.textStyles.fw700.merge(R.textStyles.fcWhite)),
-        ),
+        child: isSubmitting
+            ? const SizedBox(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+              )
+            : Text(
+                text,
+                style: R.textStyles.fz16.merge(R.textStyles.fw700.merge(R.textStyles.fcWhite)),
+              ),
       ),
     );
   }
@@ -165,7 +220,7 @@ class OnboardingScreenWidget extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              AuthButton(
+              AuthButtonWidget(
                 height: 62,
                 text: index == 2 ? 'GET STARTED' : 'NEXT',
                 onPressed: onPressed,
@@ -229,9 +284,25 @@ class AuthTextFormFieldWidget extends StatelessWidget {
           contentPadding: const EdgeInsets.symmetric(horizontal: 16),
           suffixIcon: suffixIcon,
         ),
-        onChanged: (value) => onChanged!(value),
         obscureText: obscureText,
         validator: (value) => validator!(value),
+      ),
+    );
+  }
+}
+
+class AuthTextFormFeildTitleWidget extends StatelessWidget {
+  final String title;
+
+  const AuthTextFormFeildTitleWidget({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8, left: 2),
+      child: Text(
+        title,
+        style: R.textStyles.fz13.merge(R.textStyles.fw400.merge(R.textStyles.fcBlack2)),
       ),
     );
   }

@@ -15,17 +15,6 @@ class LoginRequest {
 }
 
 @JsonSerializable(createToJson: true, createFactory: true)
-class LoginResponse {
-  String token;
-  String errorMessage;
-
-  LoginResponse({required this.token, required this.errorMessage});
-
-  Map<String, dynamic> toJson() => _$LoginResponseToJson(this);
-  factory LoginResponse.fromJson(Map<String, dynamic> json) => _$LoginResponseFromJson(json);
-}
-
-@JsonSerializable(createToJson: true, createFactory: true)
 class RegisterRequest {
   String email;
   String password;
@@ -39,14 +28,14 @@ class RegisterRequest {
 }
 
 @JsonSerializable(createToJson: true, createFactory: true)
-class RegisterResponse {
+class AuthResponse {
   String token;
   String errorMessage;
 
-  RegisterResponse({required this.token, required this.errorMessage});
+  AuthResponse({required this.token, required this.errorMessage});
 
-  Map<String, dynamic> toJson() => _$RegisterResponseToJson(this);
-  factory RegisterResponse.fromJson(Map<String, dynamic> json) => _$RegisterResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$AuthResponseToJson(this);
+  factory AuthResponse.fromJson(Map<String, dynamic> json) => _$AuthResponseFromJson(json);
 }
 
 @JsonSerializable(createToJson: true, createFactory: true)

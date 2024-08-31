@@ -6,3 +6,23 @@ final Logger logger = Logger(
     printEmojis: true,
   ),
 );
+
+void logD(String message) {
+  logger.d(message);
+}
+
+void logE(String message) {
+  logger.e(message);
+}
+
+void logI(String message) {
+  logger.i(message);
+}
+
+void logT(String message) {
+  logger.t(message);
+}
+
+void logW(String message) {
+  logger.w(message);
+}

@@ -39,3 +39,17 @@ String? validatePassword(String value) {
   }
   return null;
 }
+
+String? validateName(String value) {
+  if (value.isEmpty) {
+    return 'Name cannot be empty';
+  }
+  return null;
+}
+
+String? validateConfirmPassword(String password, String confirmPassword) {
+  if (password != confirmPassword) {
+    return 'Passwords do not match';
+  }
+  return null;
+}
