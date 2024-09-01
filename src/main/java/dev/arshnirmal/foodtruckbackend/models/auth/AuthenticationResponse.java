@@ -1,5 +1,6 @@
 package dev.arshnirmal.foodtruckbackend.models.auth;
 
+import dev.arshnirmal.foodtruckbackend.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthenticationResponse {
+    private User user;
     private String token;
     private String errorMessage;
 }

@@ -9,8 +9,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -20,15 +23,37 @@ import java.util.List;
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String firstName;
-    private String lastName;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
     private String fcmToken;
+
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
+
+    private String phoneNumber;
+
+    private String address;
+
+    private String profilePictureUrl;
+
+    private LocalDate dateOfBirth;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Order> orderHistory;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime accountCreationDate;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface FoodItemRepository extends JpaRepository<FoodItem, Integer> {
-
     List<FoodItem> findByName(String name);
 }

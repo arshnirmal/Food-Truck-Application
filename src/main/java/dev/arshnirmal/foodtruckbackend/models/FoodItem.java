@@ -1,13 +1,12 @@
 package dev.arshnirmal.foodtruckbackend.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 
 @Data
 @Builder
@@ -17,20 +16,42 @@ import lombok.NoArgsConstructor;
 @Table(name = "food_items")
 public class FoodItem {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = false)
     private String name;
 
     private String description;
 
-    private Double price;
+    @Column(nullable = false)
+    private BigDecimal price;
 
     private String imageUrl;
 
-    private Integer quantity;
+    @Column(nullable = false)
+    private int quantity;
 
+    @Column(nullable = false)
     private Boolean isAvailable;
 
-    private Boolean isVeg;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private FoodType foodType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Category category;
+
+    @Column(nullable = false)
+    private Integer preparationTime;
+
+    private BigDecimal discount;
+
+    private Double averageRating;
+
+    private Integer calories;
+    private Integer protein;
+    private Integer carbs;
+    private Integer fats;
 }

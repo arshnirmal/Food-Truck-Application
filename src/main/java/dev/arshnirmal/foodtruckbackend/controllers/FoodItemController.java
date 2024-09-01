@@ -2,17 +2,17 @@ package dev.arshnirmal.foodtruckbackend.controllers;
 
 import dev.arshnirmal.foodtruckbackend.models.FoodItem;
 import dev.arshnirmal.foodtruckbackend.services.FoodItemService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/fooditems")
+@RequestMapping("/api/fooditems")
+@RequiredArgsConstructor
 public class FoodItemController {
-    @Autowired
-    private FoodItemService foodItemService;
+    private final FoodItemService foodItemService;
 
     @PostMapping("/add")
     public ResponseEntity<FoodItem> addFoodItem(@RequestBody FoodItem foodItem) {
@@ -22,7 +22,7 @@ public class FoodItemController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FoodItem> updateFoodItem(@PathVariable int id ,@RequestBody FoodItem foodItem) {
+    public ResponseEntity<FoodItem> updateFoodItem(@PathVariable int id, @RequestBody FoodItem foodItem) {
         foodItemService.updateFoodItem(id, foodItem);
 
         return ResponseEntity.ok(foodItemService.getFoodItem(id));

@@ -35,18 +35,19 @@ public class AuthenticationService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already exists");
         }
         var user = User.builder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
+                .name(request.getName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .fcmToken(request.getFcmToken())
+                .accountCreationDate(java.time.LocalDateTime.now())
                 .build();
 
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
 
         return AuthenticationResponse.builder()
+                .user(user)
                 .token(jwtToken)
                 .errorMessage("")
                 .build();
@@ -65,6 +66,7 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
 
         return AuthenticationResponse.builder()
+                .user(user)
                 .token(jwtToken)
                 .errorMessage("")
                 .build();
@@ -107,7 +109,7 @@ public class AuthenticationService {
         try {
             firebaseMessaging.send(message);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to send notification");
         }
     }
 }

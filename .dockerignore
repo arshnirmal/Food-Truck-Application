@@ -1,0 +1,33 @@
+# Maven specific files
+target/
+pom.xml.versionsBackup
+pom.xml.tag
+pom.xml.releaseBackup
+release.properties
+
+# IntelliJ IDEA specific files
+.idea/
+*.iml
+
+# Eclipse specific files
+.classpath
+.project
+.settings/
+
+# MacOS specific files
+.DS_Store
+
+# Logs
+logs/
+*.log
+
+# Git
+.git
+.gitignore
+
+# Docker specific files
+Dockerfile
+docker-compose.yml
+
+# Firebase config
+food-truck-f524e-firebase-adminsdk-2szft-579d5d1f9c.json

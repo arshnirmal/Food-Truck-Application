@@ -32,4 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 
-food-truck-f524e-firebase-adminsdk-2szft-579d5d1f9c.json
+src/main/resources/food-truck-f524e-firebase-adminsdk-2szft-579d5d1f9c.json
