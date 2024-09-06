@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://ep-polished-fire-a1rpm8q7.ap-southeast-1.aws.neon.tech/food_truck
+    username: food_truck_owner
+    password: 9ito7UYgLXwx
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate  # 'validate' to ensure schema correctness without altering it in production
+    show-sql: false  # Turn off SQL logging in production for performance
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: false  # Turn off SQL formatting for production
+        default_schema: public
+
+firebase:
+  config-file: ${FIREBASE_CONFIG_BASE64}
