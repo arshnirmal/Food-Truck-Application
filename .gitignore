@@ -33,3 +33,5 @@ build/
 .vscode/
 
 src/main/resources/food-truck-f524e-firebase-adminsdk-2szft-579d5d1f9c.json
+src/main/resources/firebase_config_base64.txt
+.env
