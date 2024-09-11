@@ -18,8 +18,8 @@ import 'package:food_truck/utils/injection.dart' as _i109;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+const String _test = 'test';
 const String _dev = 'dev';
-const String _prod = 'prod';
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -41,17 +41,17 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i255.AuthenticationService());
     gh.lazySingleton<_i169.UserRepository>(() => _i169.UserRepository());
     gh.factory<String>(
+      () => registerModule.testBaseUrl,
+      instanceName: 'baseUrl',
+      registerFor: {_test},
+    );
+    gh.factory<String>(
       () => registerModule.devBaseUrl,
       instanceName: 'baseUrl',
       registerFor: {_dev},
     );
     gh.singleton<_i802.DioClient>(
         () => _i802.DioClient(gh<String>(instanceName: 'baseUrl')));
-    gh.factory<String>(
-      () => registerModule.prodBaseUrl,
-      instanceName: 'baseUrl',
-      registerFor: {_prod},
-    );
     return this;
   }
 }

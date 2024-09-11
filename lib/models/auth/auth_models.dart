@@ -1,3 +1,4 @@
+import 'package:food_truck/models/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'auth_models.g.dart';
@@ -29,10 +30,11 @@ class RegisterRequest {
 
 @JsonSerializable(createToJson: true, createFactory: true)
 class AuthResponse {
+  User user;
   String token;
   String errorMessage;
 
-  AuthResponse({required this.token, required this.errorMessage});
+  AuthResponse({required this.user, required this.token, required this.errorMessage});
 
   Map<String, dynamic> toJson() => _$AuthResponseToJson(this);
   factory AuthResponse.fromJson(Map<String, dynamic> json) => _$AuthResponseFromJson(json);

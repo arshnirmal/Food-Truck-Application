@@ -231,7 +231,7 @@ class OnboardingScreenWidget extends StatelessWidget {
                     )
                   : TextButton(
                       onPressed: () {
-                        context.pushReplacement(R.routes.login);
+                        context.goNamed(R.routes.login);
                       },
                       child: Text(
                         'Skip',

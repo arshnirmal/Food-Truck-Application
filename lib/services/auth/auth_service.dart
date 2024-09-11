@@ -35,6 +35,8 @@ class AuthenticationService {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         return AuthResponse.fromJson(response.data);
+      } else if (response.statusCode == 401 || response.statusCode == 403) {
+        return AuthResponse.fromJson(response.data);
       }
     } on DioException catch (e) {
       throw Exception(e.response?.data);
@@ -50,6 +52,8 @@ class AuthenticationService {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
+        return AuthResponse.fromJson(response.data);
+      } else if (response.statusCode == 401 || response.statusCode == 403) {
         return AuthResponse.fromJson(response.data);
       }
     } on DioException catch (e) {
@@ -77,6 +81,8 @@ class AuthenticationService {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
+        return ForgotPasswordResponse.fromJson(response.data);
+      } else if (response.statusCode == 401 || response.statusCode == 403) {
         return ForgotPasswordResponse.fromJson(response.data);
       }
     } on DioException catch (e) {

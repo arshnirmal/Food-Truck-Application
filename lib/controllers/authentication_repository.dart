@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:food_truck/controllers/user_repository.dart';
 import 'package:food_truck/models/auth/auth_models.dart';
 import 'package:food_truck/services/auth/auth_service.dart';
 import 'package:food_truck/utils/injection.dart';
-import 'package:food_truck/utils/logger.dart';
 import 'package:food_truck/utils/secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
@@ -13,14 +13,13 @@ enum AuthenticationStatus { unknown, authenticated, unauthenticated }
 class AuthenticationRepository {
   final _controller = StreamController<AuthenticationStatus>();
   final _authService = getIt<AuthenticationService>();
+  final _userRepository = getIt<UserRepository>();
 
   Stream<AuthenticationStatus> get status async* {
-    await Future<void>.delayed(const Duration(seconds: 1));
-    yield AuthenticationStatus.unauthenticated;
     yield* _controller.stream;
   }
 
-  void verifyAuthStatus() async {
+  Future<void> verifyAuthStatus() async {
     final token = await SecureStorage().getAuthToken();
     if (token != null && token.isNotEmpty) {
       _controller.add(AuthenticationStatus.authenticated);
@@ -41,10 +40,13 @@ class AuthenticationRepository {
     final response = await _authService.register(registerReq);
 
     if (response != null && response.token.isNotEmpty) {
-      logD('Token: ${response.token}');
       await SecureStorage().saveAuthToken(response.token);
+      _controller.add(AuthenticationStatus.authenticated);
+      _userRepository.setUser(response.user);
+
       return true;
     }
+    _controller.add(AuthenticationStatus.unauthenticated);
     return false;
   }
 
@@ -56,14 +58,20 @@ class AuthenticationRepository {
 
     if (response != null && response.token.isNotEmpty) {
       await SecureStorage().saveAuthToken(response.token);
+      _controller.add(AuthenticationStatus.authenticated);
+      _userRepository.setUser(response.user);
+
       return true;
     }
+    _controller.add(AuthenticationStatus.unauthenticated);
     return false;
   }
 
   void logOut() async {
-    _controller.add(AuthenticationStatus.unauthenticated);
     await _authService.logout();
+    await SecureStorage().deleteAuthToken();
+    _userRepository.clearUser();
+    _controller.add(AuthenticationStatus.unauthenticated);
   }
 
   Future<bool> forgotPassword({required String email}) async {
@@ -81,6 +89,7 @@ class AuthenticationRepository {
   Future<bool> verifyOtp({required String email, required String otp}) async {
     final savedOtp = await SecureStorage().getOtp();
     if (savedOtp == otp) {
+      await SecureStorage().deleteOtp();
       return true;
     }
     return false;

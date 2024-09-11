@@ -138,6 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
         return AuthButtonWidget(
           height: 62,
           text: 'LOG IN',
+          isSubmitting: state.isSubmitting,
           onPressed: () async {
             if (_formKey.currentState!.validate()) {
               context.read<AuthBloc>().add(
@@ -147,7 +148,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   );
 
-              context.go(R.routes.home);
+              popUntilPath(context, '');
+              context.goNamed(R.routes.home);
             }
           },
         );

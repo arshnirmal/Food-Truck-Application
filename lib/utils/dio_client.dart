@@ -12,6 +12,7 @@ class DioClient {
   }
 
   _initializeDio(String baseUrl) {
+    logT('DioClient: _initializeDio baseUrl: $baseUrl');
     _dio = Dio(
       BaseOptions(
         baseUrl: baseUrl,

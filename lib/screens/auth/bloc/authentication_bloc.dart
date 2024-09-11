@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:food_truck/models/user.dart';
-import 'package:food_truck/controllers/user_repository.dart';
 import 'package:food_truck/controllers/authentication_repository.dart';
+import 'package:food_truck/controllers/user_repository.dart';
+import 'package:food_truck/models/user.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
@@ -59,8 +59,6 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         break;
 
       case AuthenticationStatus.unknown:
-        emit(const AuthenticationInitial());
-
       default:
         emit(const AuthenticationInitial());
     }

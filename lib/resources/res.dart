@@ -38,19 +38,26 @@ class Fonts {
 class Strings {
   String appName = 'Urban Bites';
   String devAPI = 'http://192.168.1.21:8080/api';
-  String prodAPI = 'https://food-truck-latest.onrender.com/api';
+  String testAPI = 'https://food-truck-latest.onrender.com/api';
+  String dev = 'dev';
+  String test = 'test';
+  String prod = 'prod';
 }
 
 class Routes {
   String splashscreen = '/';
-  String onboarding = '/onboarding';
-  String signup = '/signup';
-  String login = '/login';
-  String forgotPassword = '/forgot-password';
-  String optVerification = '/otp-verification';
-  String home = '/home';
-  String profile = '/profile';
-  String settings = '/settings';
+
+  // Auth
+  String onboarding = 'onboarding';
+  String signup = 'signup';
+  String login = 'login';
+  String forgotPassword = 'forgot-password';
+  String optVerification = 'otp-verification';
+
+  // Home
+  String home = 'home';
+  String profile = 'profile';
+  String settings = 'settings';
 }
 
 class Colorx {

@@ -44,7 +44,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
             title: 'Welcome to Urban Bites!',
             subtitle: 'Discover delicious street food nearby with Urban Bites app.',
             onPressed: () {
-              _controller.animateTo(1);
+              _controller.animateTo(1, duration: const Duration(milliseconds: 0), curve: Curves.easeIn);
             },
           ),
           OnboardingScreenWidget(
@@ -53,7 +53,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
             title: 'Explore Diverse Menus',
             subtitle: 'Find your next favorite dish from a variety of food trucks.',
             onPressed: () {
-              _controller.animateTo(2);
+              _controller.animateTo(2, duration: const Duration(milliseconds: 0), curve: Curves.easeIn);
             },
           ),
           OnboardingScreenWidget(
@@ -62,7 +62,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> with SingleTickerPr
             title: 'Let\'s Get Started',
             subtitle: 'Start your street food adventure with Urban Bites today.',
             onPressed: () {
-              context.pushReplacement(R.routes.login);
+              context.goNamed(R.routes.login);
             },
           ),
         ],

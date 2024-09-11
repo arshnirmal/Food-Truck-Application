@@ -22,7 +22,7 @@ Future<void> main() async {
         options: DefaultFirebaseOptions.currentPlatform,
       );
 
-      configureDependencies('dev');
+      configureDependencies(R.strings.test);
 
       runApp(const App());
     },
@@ -69,10 +69,14 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider(
-      create: (context) => AuthenticationBloc(
-        authenticationRepository: _authenticationRepository,
-        userRepository: _userRepository,
-      ),
+      create: (context) {
+        final bloc = AuthenticationBloc(
+          authenticationRepository: _authenticationRepository,
+          userRepository: _userRepository,
+        );
+        _authenticationRepository.verifyAuthStatus();
+        return bloc;
+      },
       child: MaterialApp.router(
         title: R.strings.appName,
         routerConfig: AppRouter.router,
@@ -87,16 +91,14 @@ class _AppState extends State<App> {
             listener: (context, state) {
               switch (state.status) {
                 case AuthenticationStatus.authenticated:
-                  AppRouter.router.go(R.routes.home);
+                  AppRouter.router.goNamed(R.routes.home);
                   break;
                 case AuthenticationStatus.unauthenticated:
-                  AppRouter.router.go(R.routes.onboarding);
+                  AppRouter.router.goNamed(R.routes.onboarding);
                   break;
                 case AuthenticationStatus.unknown:
-                  AppRouter.router.go(R.routes.login);
-                  break;
                 default:
-                  break;
+                  AppRouter.router.goNamed(R.routes.login);
               }
             },
           );
