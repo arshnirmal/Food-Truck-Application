@@ -21,26 +21,6 @@ sealed class AuthState extends Equatable {
     this.otpTimer = 30,
   });
 
-  // AuthState copyWith({
-  //   String? name,
-  //   String? email,
-  //   String? password,
-  //   bool? isPasswordVisible,
-  //   bool? isSubmitting,
-  //   bool? isSuccess,
-  //   bool? isFailure,
-  // }) {
-  //   return AuthState(
-  //     name: name ?? this.name,
-  //     email: email ?? this.email,
-  //     password: password ?? this.password,
-  //     isPasswordVisible: isPasswordVisible ?? this.isPasswordVisible,
-  //     isSubmitting: isSubmitting ?? this.isSubmitting,
-  //     isSuccess: isSuccess ?? this.isSuccess,
-  //     isFailure: isFailure ?? this.isFailure,
-  //   );
-  // }
-
   @override
   List<Object> get props => [name, email, password, isPasswordVisible, isSubmitting, isSuccess, isFailure, otpTimer];
 }

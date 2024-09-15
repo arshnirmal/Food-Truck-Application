@@ -4,34 +4,22 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class UserRepository {
-  User? _user;
   final SharedPreferencesUser _sharedPreferences = SharedPreferencesUser();
 
   Future<User?> getUser() async {
-    if (_user != null) {
-      return _user;
-    }
-
     final user = await _sharedPreferences.getUser();
-    if (user != null) {
-      _user = user;
-    }
-
     return user;
   }
 
-  void setUser(User user) {
-    _user = user;
-    _sharedPreferences.saveUser(user);
+  void setUser(User user) async {
+    await _sharedPreferences.saveUser(user);
   }
 
-  void updateUser(User user) {
-    _user = user;
-    _sharedPreferences.saveUser(user);
+  void updateUser(User user) async {
+    await _sharedPreferences.saveUser(user);
   }
 
-  void clearUser() {
-    _user = null;
-    _sharedPreferences.clearUser();
+  void clearUser() async {
+    await _sharedPreferences.clearUser();
   }
 }

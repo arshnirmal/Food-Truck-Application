@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:food_truck/utils/logger.dart';
 import 'package:food_truck/utils/secure_storage.dart';
@@ -12,7 +14,6 @@ class DioClient {
   }
 
   _initializeDio(String baseUrl) {
-    logT('DioClient: _initializeDio baseUrl: $baseUrl');
     _dio = Dio(
       BaseOptions(
         baseUrl: baseUrl,
@@ -82,6 +83,14 @@ class DioClient {
         queryParameters: queryParameters,
       );
     } on DioException catch (e) {
+      if (e.requestOptions.path.contains('/auth/')) {
+        return Response(
+          requestOptions: e.requestOptions,
+          statusCode: e.response?.statusCode,
+          statusMessage: e.response?.statusMessage,
+          data: e.response?.data,
+        );
+      }
       if (e.response?.statusCode == 401 || e.response?.statusCode == 403) {
         await unauthorized();
       }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_truck/utils/logger.dart';
 import 'package:go_router/go_router.dart';
 
 showSnackBar(BuildContext context, String message) {
@@ -58,11 +57,9 @@ String? validateConfirmPassword(String password, String confirmPassword) {
 
 void popUntilPath(BuildContext context, String path) {
   final router = GoRouter.of(context).routerDelegate.currentConfiguration.matches.last.matchedLocation;
-  logD('router: $router');
 
   while (router != path) {
     if (!context.canPop()) {
-      logD('Cannot pop');
       return;
     }
     context.pop();

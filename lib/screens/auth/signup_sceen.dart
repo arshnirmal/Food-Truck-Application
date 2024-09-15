@@ -5,6 +5,7 @@ import 'package:food_truck/resources/res.dart';
 import 'package:food_truck/screens/auth/bloc/auth_bloc.dart';
 import 'package:food_truck/utils/utils.dart';
 import 'package:food_truck/widgets/auth_widgets.dart';
+import 'package:go_router/go_router.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -45,7 +46,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
               padding: const EdgeInsets.all(24),
               child: BlocProvider(
                 create: (context) => AuthBloc(_authenticationRepository),
-                child: _signUpForm(),
+                child: BlocListener<AuthBloc, AuthState>(
+                  listener: (context, state) {
+                    if (state is AuthSuccess) {
+                      context.pushNamed(R.routes.home);
+                    } else if (state is AuthFailure) {
+                      showSnackBar(context, 'Error signing up');
+                    }
+                  },
+                  child: _signUpForm(),
+                ),
               ),
             ),
           ),
@@ -136,10 +146,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
         return AuthButtonWidget(
           text: 'SIGN UP',
           height: 62,
+          isSubmitting: state.isSubmitting,
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               context.read<AuthBloc>().add(
-                    SignUpSubmitted(name: _nameController.text, email: _emailController.text, password: _passwordController.text),
+                    SignUpSubmitted(
+                      name: _nameController.text,
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                      confirmPassword: _confirmPasswordController.text,
+                    ),
                   );
             }
           },

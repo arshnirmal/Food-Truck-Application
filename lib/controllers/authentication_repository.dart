@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:food_truck/controllers/user_repository.dart';
 import 'package:food_truck/models/auth/auth_models.dart';
 import 'package:food_truck/services/auth/auth_service.dart';
 import 'package:food_truck/utils/injection.dart';
+import 'package:food_truck/utils/logger.dart';
 import 'package:food_truck/utils/secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
@@ -21,16 +23,12 @@ class AuthenticationRepository {
 
   Future<void> verifyAuthStatus() async {
     final token = await SecureStorage().getAuthToken();
+    log('Token: $token');
     if (token != null && token.isNotEmpty) {
       _controller.add(AuthenticationStatus.authenticated);
     } else {
       _controller.add(AuthenticationStatus.unauthenticated);
     }
-  }
-
-  Future<bool> verifyApi() async {
-    final response = await _authService.helloworld();
-    return response;
   }
 
   Future<bool> signUp({required String name, required String email, required String password}) async {
@@ -42,7 +40,9 @@ class AuthenticationRepository {
     if (response != null && response.token.isNotEmpty) {
       await SecureStorage().saveAuthToken(response.token);
       _controller.add(AuthenticationStatus.authenticated);
-      _userRepository.setUser(response.user);
+      if (response.user != null) {
+        _userRepository.setUser(response.user!);
+      }
 
       return true;
     }
@@ -59,7 +59,10 @@ class AuthenticationRepository {
     if (response != null && response.token.isNotEmpty) {
       await SecureStorage().saveAuthToken(response.token);
       _controller.add(AuthenticationStatus.authenticated);
-      _userRepository.setUser(response.user);
+      if (response.user != null) {
+        logD('User: ${response.user}');
+        _userRepository.setUser(response.user!);
+      }
 
       return true;
     }

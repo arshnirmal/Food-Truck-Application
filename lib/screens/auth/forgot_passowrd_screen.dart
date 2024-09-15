@@ -8,14 +8,16 @@ import 'package:food_truck/utils/utils.dart';
 import 'package:food_truck/widgets/auth_widgets.dart';
 import 'package:go_router/go_router.dart';
 
-class ForgotPassowrdScreen extends StatefulWidget {
-  const ForgotPassowrdScreen({super.key});
+
+// TODO: Implement Forgot Password Screen
+class ForgotPassowordScreen extends StatefulWidget {
+  const ForgotPassowordScreen({super.key});
 
   @override
-  State<ForgotPassowrdScreen> createState() => _ForgotPassowrdScreenState();
+  State<ForgotPassowordScreen> createState() => _ForgotPassowordScreenState();
 }
 
-class _ForgotPassowrdScreenState extends State<ForgotPassowrdScreen> {
+class _ForgotPassowordScreenState extends State<ForgotPassowordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final AuthenticationRepository _authenticationRepository = AuthenticationRepository();

@@ -45,7 +45,17 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: const EdgeInsets.all(24),
               child: BlocProvider(
                 create: (context) => AuthBloc(_authenticationRepository),
-                child: _loginForm(),
+                child: BlocListener<AuthBloc, AuthState>(
+                  listener: (context, state) {
+                    if (state is AuthSuccess) {
+                      popUntilPath(context, '');
+                      context.goNamed(R.routes.home);
+                    } else if (state is AuthFailure) {
+                      showSnackBar(context, 'Invalid email or password');
+                    }
+                  },
+                  child: _loginForm(),
+                ),
               ),
             ),
           ),
@@ -104,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
               alignment: Alignment.centerRight,
               child: InkWell(
                 onTap: () {
-                  context.push(R.routes.forgotPassword);
+                  context.pushNamed(R.routes.forgotPassword);
                 },
                 child: Text(
                   'Forgot Password?',
@@ -147,9 +157,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       password: _passwordController.text,
                     ),
                   );
-
-              popUntilPath(context, '');
-              context.goNamed(R.routes.home);
             }
           },
         );
@@ -167,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         InkWell(
           onTap: () {
-            context.push(R.routes.signup);
+            context.pushNamed(R.routes.signup);
           },
           child: Text(
             'Sign Up',
@@ -181,21 +188,22 @@ class _LoginScreenState extends State<LoginScreen> {
   _socialMediaIcons() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         IconButton(
           onPressed: () {},
           padding: const EdgeInsets.all(14),
           icon: SvgPicture.asset(
-            R.icons.facebook,
-            width: 62,
-            height: 62,
+            R.icons.google,
+            width: 66,
+            height: 66,
           ),
         ),
         IconButton(
           onPressed: () {},
           padding: const EdgeInsets.all(14),
           icon: SvgPicture.asset(
-            R.icons.x,
+            R.icons.facebook,
             width: 62,
             height: 62,
           ),

@@ -37,9 +37,9 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i1013.NotificationService());
     gh.lazySingleton<_i545.AuthenticationRepository>(
         () => _i545.AuthenticationRepository());
+    gh.lazySingleton<_i169.UserRepository>(() => _i169.UserRepository());
     gh.lazySingleton<_i255.AuthenticationService>(
         () => _i255.AuthenticationService());
-    gh.lazySingleton<_i169.UserRepository>(() => _i169.UserRepository());
     gh.factory<String>(
       () => registerModule.testBaseUrl,
       instanceName: 'baseUrl',

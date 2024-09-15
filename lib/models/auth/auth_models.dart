@@ -30,11 +30,16 @@ class RegisterRequest {
 
 @JsonSerializable(createToJson: true, createFactory: true)
 class AuthResponse {
-  User user;
+  @JsonKey(name: 'user')
+  User? user;
+
+  @JsonKey(name: 'token')
   String token;
+
+  @JsonKey(name: 'errorMessage')
   String errorMessage;
 
-  AuthResponse({required this.user, required this.token, required this.errorMessage});
+  AuthResponse({this.user, required this.token, required this.errorMessage});
 
   Map<String, dynamic> toJson() => _$AuthResponseToJson(this);
   factory AuthResponse.fromJson(Map<String, dynamic> json) => _$AuthResponseFromJson(json);

@@ -145,7 +145,8 @@ class AuthButtonWidget extends StatelessWidget {
           ),
         ),
         child: isSubmitting
-            ? const SizedBox(
+            ? const SizedBox.square(
+                dimension: 24,
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                 ),
@@ -254,6 +255,7 @@ class AuthTextFormFieldWidget extends StatelessWidget {
   final String? Function(String?)? validator;
   final Widget? suffixIcon;
   final bool obscureText;
+  final FocusNode? focusNode;
 
   const AuthTextFormFieldWidget({
     super.key,
@@ -263,6 +265,7 @@ class AuthTextFormFieldWidget extends StatelessWidget {
     this.validator,
     this.suffixIcon,
     this.obscureText = false,
+    this.focusNode,
   });
 
   @override
@@ -272,6 +275,7 @@ class AuthTextFormFieldWidget extends StatelessWidget {
       width: double.infinity,
       child: TextFormField(
         controller: controller,
+        focusNode: focusNode,
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: R.textStyles.fz14.merge(R.textStyles.fw400.merge(R.textStyles.fcHintText)),

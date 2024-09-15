@@ -35,7 +35,7 @@ class AppRouter {
           GoRoute(
             name: R.routes.forgotPassword,
             path: R.routes.forgotPassword,
-            builder: (context, state) => const ForgotPassowrdScreen(),
+            builder: (context, state) => const ForgotPassowordScreen(),
           ),
           GoRoute(
             name: R.routes.optVerification,

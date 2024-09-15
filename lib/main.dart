@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_truck/controllers/authentication_repository.dart';
@@ -21,19 +21,14 @@ Future<void> main() async {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
+      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
 
       configureDependencies(R.strings.test);
 
       runApp(const App());
     },
     (error, stackTrace) {
-      FirebaseAnalytics.instance.logEvent(
-        name: 'main',
-        parameters: {
-          'error': error.toString(),
-          'stackTrace': stackTrace.toString(),
-        },
-      );
+      FirebaseCrashlytics.instance.recordError(error, stackTrace);
     },
   );
 }
@@ -54,9 +49,11 @@ class _AppState extends State<App> {
   void initState() {
     super.initState();
 
+    _authenticationRepository.verifyAuthStatus();
+
     _notificationService.requestNotificationPermissions();
-    _notificationService.initLocalNotification();
     _notificationService.initFirebaseMessaging();
+    _notificationService.initLocalNotification();
     _notificationService.tokenRefresh();
   }
 
@@ -69,14 +66,10 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider(
-      create: (context) {
-        final bloc = AuthenticationBloc(
-          authenticationRepository: _authenticationRepository,
-          userRepository: _userRepository,
-        );
-        _authenticationRepository.verifyAuthStatus();
-        return bloc;
-      },
+      create: (context) => AuthenticationBloc(
+        authenticationRepository: _authenticationRepository,
+        userRepository: _userRepository,
+      ),
       child: MaterialApp.router(
         title: R.strings.appName,
         routerConfig: AppRouter.router,

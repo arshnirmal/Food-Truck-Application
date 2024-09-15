@@ -61,6 +61,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     String name = event.name;
     String email = event.email;
     String password = event.password;
+    String confirmPassword = event.confirmPassword;
+
+    if (name.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+      emit(const AuthFailure());
+      return;
+    }
+
+    if (password != confirmPassword) {
+      emit(const AuthFailure());
+      return;
+    }
 
     emit(const AuthSubmitting());
 
@@ -89,7 +100,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(const AuthSubmitting());
 
     await _authenticationRepository.verifyOtp(email: email, otp: otp);
-    
   }
 
   void _onOtpTimerStarted(OtpTimerStarted event, Emitter<AuthState> emit) {

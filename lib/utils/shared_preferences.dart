@@ -1,25 +1,19 @@
 import 'dart:convert';
 
 import 'package:food_truck/models/user.dart';
+import 'package:food_truck/utils/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesUser {
-  static SharedPreferencesUser? _instance;
-  static SharedPreferences? _preferences;
-
-  static Future<SharedPreferencesUser> getInstance() async {
-    _instance ??= SharedPreferencesUser();
-    _preferences ??= await SharedPreferences.getInstance();
-
-    return _instance!;
-  }
+  final SharedPreferencesAsync _sharedPreferencesAsync = SharedPreferencesAsync();
 
   Future<void> saveUser(User user) async {
-    await _preferences!.setString('user', jsonEncode(user.toJson()));
+    await _sharedPreferencesAsync.setString('user', jsonEncode(user.toJson()));
   }
 
   Future<User?> getUser() async {
-    final user = _preferences!.getString('user');
+    final user = await _sharedPreferencesAsync.getString('user');
+    logE('User: $user');
     if (user != null) {
       return User.fromJson(jsonDecode(user));
     }
@@ -27,6 +21,6 @@ class SharedPreferencesUser {
   }
 
   Future<void> clearUser() async {
-    await _preferences!.remove('user');
+    await _sharedPreferencesAsync.remove('user');
   }
 }

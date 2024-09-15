@@ -23,7 +23,7 @@ class Images {
 }
 
 class Iconx {
-  String google = 'assets/icons/google.svg';
+  String google = 'assets/icons/google1.svg';
   String facebook = 'assets/icons/facebook.svg';
   String apple = 'assets/icons/apple.svg';
   String x = 'assets/icons/x.svg';
@@ -38,7 +38,8 @@ class Fonts {
 class Strings {
   String appName = 'Urban Bites';
   String devAPI = 'http://192.168.1.21:8080/api';
-  String testAPI = 'https://food-truck-latest.onrender.com/api';
+  String testAPI = 'https://disturbing-lenee-my-self-project-1-8ccfafc7.koyeb.app/api';
+  String testAPI1 = 'https://food-truck-latest.onrender.com/api';
   String dev = 'dev';
   String test = 'test';
   String prod = 'prod';
@@ -76,6 +77,9 @@ class Colorx {
 }
 
 class TextStyles {
+  final TextStyle fontPrimary = TextStyle(fontFamily: R.fonts.primaryFont);
+  final TextStyle fontSecondary = TextStyle(fontFamily: R.fonts.secondaryFont);
+
   final TextStyle fz12 = const TextStyle(fontSize: 12);
   final TextStyle fz13 = const TextStyle(fontSize: 13);
   final TextStyle fz14 = const TextStyle(fontSize: 14);
