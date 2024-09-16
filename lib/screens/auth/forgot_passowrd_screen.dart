@@ -8,7 +8,6 @@ import 'package:food_truck/utils/utils.dart';
 import 'package:food_truck/widgets/auth_widgets.dart';
 import 'package:go_router/go_router.dart';
 
-
 // TODO: Implement Forgot Password Screen
 class ForgotPassowordScreen extends StatefulWidget {
   const ForgotPassowordScreen({super.key});
@@ -141,14 +140,14 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         maxLength: 1,
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
-        style: R.textStyles.fz16.merge(R.textStyles.fw700).merge(R.textStyles.fcBlack2),
+        style: R.textStyles.fz16.merge(R.textStyles.fw700).merge(R.textStyles.fcTextBlack2),
         decoration: const InputDecoration(
           counter: Offstage(),
           border: InputBorder.none,
           contentPadding: EdgeInsets.zero,
         ),
         cursorHeight: 24,
-        cursorColor: R.colors.black2,
+        cursorColor: R.colors.textBlack2,
         onChanged: (value) {
           if (value.length == 1) {
             _otp[index] = value;
@@ -186,19 +185,19 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         },
                         child: Text(
                           'Resend',
-                          style: R.textStyles.fz14.merge(R.textStyles.fw700).merge(R.textStyles.fcBlack2).merge(R.textStyles.underline),
+                          style: R.textStyles.fz14.merge(R.textStyles.fw700).merge(R.textStyles.fcTextBlack2).merge(R.textStyles.underline),
                         ),
                       ),
                       Text(
                         ' in ',
-                        style: R.textStyles.fz14.merge(R.textStyles.fw400).merge(R.textStyles.fcBlack2),
+                        style: R.textStyles.fz14.merge(R.textStyles.fw400).merge(R.textStyles.fcTextBlack2),
                       ),
                       BlocBuilder<AuthBloc, AuthState>(
                         builder: (context, state) {
                           context.read<AuthBloc>().add(OtpTimerStarted(state.otpTimer));
                           return Text(
                             '${state.otpTimer}sec',
-                            style: R.textStyles.fz14.merge(R.textStyles.fw700).merge(R.textStyles.fcBlack2),
+                            style: R.textStyles.fz14.merge(R.textStyles.fw700).merge(R.textStyles.fcTextBlack2),
                           );
                         },
                       ),

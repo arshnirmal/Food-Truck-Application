@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:food_truck/models/auth/auth_models.dart';
-import 'package:food_truck/services/firebase/notification_service.dart';
+import 'package:food_truck/services/notification_service.dart';
 import 'package:food_truck/utils/dio_client.dart';
 import 'package:food_truck/utils/injection.dart';
 import 'package:food_truck/utils/logger.dart';

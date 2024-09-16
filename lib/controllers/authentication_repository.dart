@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:food_truck/controllers/user_repository.dart';
 import 'package:food_truck/models/auth/auth_models.dart';
-import 'package:food_truck/services/auth/auth_service.dart';
+import 'package:food_truck/services/auth_service.dart';
 import 'package:food_truck/utils/injection.dart';
 import 'package:food_truck/utils/logger.dart';
 import 'package:food_truck/utils/secure_storage.dart';

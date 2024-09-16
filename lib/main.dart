@@ -8,7 +8,7 @@ import 'package:food_truck/controllers/authentication_repository.dart';
 import 'package:food_truck/controllers/user_repository.dart';
 import 'package:food_truck/resources/res.dart';
 import 'package:food_truck/screens/auth/bloc/authentication_bloc.dart';
-import 'package:food_truck/services/firebase/notification_service.dart';
+import 'package:food_truck/services/notification_service.dart';
 import 'package:food_truck/utils/app_config.dart';
 import 'package:food_truck/utils/injection.dart';
 

@@ -170,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
       children: [
         Text(
           'Don\'t have an account? ',
-          style: R.textStyles.fz14.merge(R.textStyles.fw400.merge(R.textStyles.fcBlack2)),
+          style: R.textStyles.fz14.merge(R.textStyles.fw400.merge(R.textStyles.fcTextBlack2)),
         ),
         InkWell(
           onTap: () {

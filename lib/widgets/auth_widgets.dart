@@ -197,7 +197,7 @@ class OnboardingScreenWidget extends StatelessWidget {
               SizedBox(height: height * 0.064),
               Text(
                 title,
-                style: R.textStyles.fz24.merge(R.textStyles.fw900.merge(R.textStyles.fcOnboardingTitle)),
+                style: R.textStyles.fz24.merge(R.textStyles.fw900.merge(R.textStyles.fcTextBlack2)),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
@@ -306,7 +306,7 @@ class AuthTextFormFeildTitleWidget extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8, left: 2),
       child: Text(
         title,
-        style: R.textStyles.fz13.merge(R.textStyles.fw400.merge(R.textStyles.fcBlack2)),
+        style: R.textStyles.fz13.merge(R.textStyles.fw400).merge(R.textStyles.fcTextBlack2),
       ),
     );
   }
