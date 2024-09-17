@@ -30,7 +30,6 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final FirebaseMessaging firebaseMessaging;
 
-
     public AuthenticationResponse register(RegisterRequest request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already exists");
@@ -58,9 +57,7 @@ public class AuthenticationService {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
-                        request.getPassword()
-                )
-        );
+                        request.getPassword()));
 
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
@@ -73,7 +70,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public String reset_password(String email) {
+    public String otpVerification(String email) {
         if (email == null || email.trim().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email is required");
         }
@@ -112,5 +109,20 @@ public class AuthenticationService {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to send notification");
         }
+    }
+
+    public void resetPassword(String email, String password) {
+        if (email == null || email.trim().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email is required");
+        }
+        if (password == null || password.trim().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password is required");
+        }
+
+        var user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
     }
 }

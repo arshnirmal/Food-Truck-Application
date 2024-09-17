@@ -1,4 +1,4 @@
-package dev.arshnirmal.foodtruckbackend.controllers.auth;
+package dev.arshnirmal.foodtruckbackend.controllers;
 
 import dev.arshnirmal.foodtruckbackend.models.auth.AuthenticationResponse;
 import dev.arshnirmal.foodtruckbackend.models.auth.LoginRequest;
@@ -34,8 +34,7 @@ public class AuthenticationController {
             return ResponseEntity.status(400).body(AuthenticationResponse.builder()
                     .token("")
                     .errorMessage("User already exists")
-                    .build()
-            );
+                    .build());
         }
     }
 
@@ -49,27 +48,37 @@ public class AuthenticationController {
             return ResponseEntity.status(401).body(AuthenticationResponse.builder()
                     .token("")
                     .errorMessage("Invalid credentials")
-                    .build()
-            );
+                    .build());
         }
     }
 
-    @PostMapping("/reset-password")
-    public ResponseEntity<PasswordResetResponse> resetPassword(@RequestBody Map<String, String> request) {
+    @PostMapping("/otp-verification")
+    public ResponseEntity<PasswordResetResponse> otpVerification(@RequestBody Map<String, String> request) {
         try {
             var email = request.get("email");
-            var code = authenticationService.reset_password(email);
+            var code = authenticationService.otpVerification(email);
             return ResponseEntity.ok().body(PasswordResetResponse.builder()
                     .verificationCode(code)
                     .errorMessage("")
-                    .build()
-            );
+                    .build());
         } catch (Exception e) {
             return ResponseEntity.status(400).body(PasswordResetResponse.builder()
                     .verificationCode("")
                     .errorMessage("User not found")
-                    .build()
-            );
+                    .build());
+        }
+    }
+
+    @PostMapping("/password-reset")
+    public ResponseEntity<String> resetPassword(@RequestBody Map<String, String> request) {
+        try {
+            var email = request.get("email");
+            var password = request.get("password");
+            authenticationService.resetPassword(email, password);
+
+            return ResponseEntity.ok().body("Password reset successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body("User not found");
         }
     }
 }
