@@ -1,4 +1,4 @@
-package dev.arshnirmal.foodtruckbackend.models;
+package dev.arshnirmal.foodtruckbackend.models.order;
 
 public enum OrderStatus {
     PENDING,

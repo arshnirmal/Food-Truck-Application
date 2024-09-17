@@ -1,6 +1,6 @@
 package dev.arshnirmal.foodtruckbackend.controllers;
 
-import dev.arshnirmal.foodtruckbackend.models.FoodTruck;
+import dev.arshnirmal.foodtruckbackend.models.food_truck.FoodTruck;
 import dev.arshnirmal.foodtruckbackend.services.FoodTruckService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
 package dev.arshnirmal.foodtruckbackend.controllers;
 
-import dev.arshnirmal.foodtruckbackend.models.FoodItem;
+import dev.arshnirmal.foodtruckbackend.models.food_item.FoodItem;
 import dev.arshnirmal.foodtruckbackend.services.FoodItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +29,8 @@ public class FoodItemController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteFoodItem(@RequestBody FoodItem foodItem) {
-        foodItemService.deleteFoodItem(foodItem);
+    public ResponseEntity<String> deleteFoodItem(@PathVariable int id) {
+        foodItemService.deleteFoodItem(id);
         return ResponseEntity.ok("Food item deleted successfully");
     }
 

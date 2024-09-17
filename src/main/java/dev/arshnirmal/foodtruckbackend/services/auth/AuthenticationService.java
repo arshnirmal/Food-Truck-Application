@@ -3,11 +3,12 @@ package dev.arshnirmal.foodtruckbackend.services.auth;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
-import dev.arshnirmal.foodtruckbackend.models.Role;
-import dev.arshnirmal.foodtruckbackend.models.User;
+
 import dev.arshnirmal.foodtruckbackend.models.auth.AuthenticationResponse;
 import dev.arshnirmal.foodtruckbackend.models.auth.LoginRequest;
 import dev.arshnirmal.foodtruckbackend.models.auth.RegisterRequest;
+import dev.arshnirmal.foodtruckbackend.models.user.Role;
+import dev.arshnirmal.foodtruckbackend.models.user.User;
 import dev.arshnirmal.foodtruckbackend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

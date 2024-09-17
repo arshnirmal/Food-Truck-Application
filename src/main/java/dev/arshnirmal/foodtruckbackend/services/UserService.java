@@ -1,6 +1,6 @@
 package dev.arshnirmal.foodtruckbackend.services;
 
-import dev.arshnirmal.foodtruckbackend.models.User;
+import dev.arshnirmal.foodtruckbackend.models.user.User;
 import dev.arshnirmal.foodtruckbackend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

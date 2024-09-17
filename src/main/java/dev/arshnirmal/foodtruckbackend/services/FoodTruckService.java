@@ -1,6 +1,6 @@
 package dev.arshnirmal.foodtruckbackend.services;
 
-import dev.arshnirmal.foodtruckbackend.models.FoodTruck;
+import dev.arshnirmal.foodtruckbackend.models.food_truck.FoodTruck;
 import dev.arshnirmal.foodtruckbackend.repositories.FoodTruckRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;

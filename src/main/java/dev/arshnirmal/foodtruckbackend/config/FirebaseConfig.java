@@ -26,7 +26,7 @@ public class FirebaseConfig {
     private String firebaseConfig;
 
     @Bean
-    public FirebaseApp firebaseApp() throws IOException {
+    FirebaseApp firebaseApp() throws IOException {
         InputStream serviceAccount;
         logger.info("Loading Firebase config from: {}", firebaseConfig);
 
@@ -45,7 +45,7 @@ public class FirebaseConfig {
     }
 
     @Bean
-    public FirebaseMessaging firebaseMessaging(FirebaseApp firebaseApp) {
+    FirebaseMessaging firebaseMessaging(FirebaseApp firebaseApp) {
         return FirebaseMessaging.getInstance(firebaseApp);
     }
 }

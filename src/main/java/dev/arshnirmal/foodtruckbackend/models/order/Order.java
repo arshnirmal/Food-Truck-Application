@@ -1,4 +1,4 @@
-package dev.arshnirmal.foodtruckbackend.models;
+package dev.arshnirmal.foodtruckbackend.models.order;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import dev.arshnirmal.foodtruckbackend.models.food_item.FoodItem;
+import dev.arshnirmal.foodtruckbackend.models.food_item.PaymentMethod;
+import dev.arshnirmal.foodtruckbackend.models.user.User;
 
 @Data
 @Builder
