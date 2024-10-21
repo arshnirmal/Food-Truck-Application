@@ -46,6 +46,7 @@ public class Order {
 
     private String specialInstructions;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PaymentMethod paymentMethod;
 
