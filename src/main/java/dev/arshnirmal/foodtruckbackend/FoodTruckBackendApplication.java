@@ -13,3 +13,4 @@ public class FoodTruckBackendApplication {
 
 // ./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=arshnirmal/food-truck
 // docker build -t arshnirmal/food-truck .
+// docker run -p 8080:8080 arshnirmal/food-truck
