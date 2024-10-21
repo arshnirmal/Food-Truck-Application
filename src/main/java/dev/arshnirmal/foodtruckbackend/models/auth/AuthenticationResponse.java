@@ -1,6 +1,6 @@
 package dev.arshnirmal.foodtruckbackend.models.auth;
 
-import dev.arshnirmal.foodtruckbackend.models.User;
+import dev.arshnirmal.foodtruckbackend.models.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

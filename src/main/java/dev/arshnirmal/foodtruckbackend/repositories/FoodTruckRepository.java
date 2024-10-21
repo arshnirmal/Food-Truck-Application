@@ -1,8 +1,9 @@
 package dev.arshnirmal.foodtruckbackend.repositories;
 
-import dev.arshnirmal.foodtruckbackend.models.FoodTruck;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import dev.arshnirmal.foodtruckbackend.models.food_truck.FoodTruck;
 
 import java.util.List;
 

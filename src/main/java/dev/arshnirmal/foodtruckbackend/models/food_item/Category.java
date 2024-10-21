@@ -1,4 +1,4 @@
-package dev.arshnirmal.foodtruckbackend.models;
+package dev.arshnirmal.foodtruckbackend.models.food_item;
 
 public enum Category {
     APPETIZER,

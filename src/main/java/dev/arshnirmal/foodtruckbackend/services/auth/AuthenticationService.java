@@ -3,11 +3,12 @@ package dev.arshnirmal.foodtruckbackend.services.auth;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
-import dev.arshnirmal.foodtruckbackend.models.Role;
-import dev.arshnirmal.foodtruckbackend.models.User;
+
 import dev.arshnirmal.foodtruckbackend.models.auth.AuthenticationResponse;
 import dev.arshnirmal.foodtruckbackend.models.auth.LoginRequest;
 import dev.arshnirmal.foodtruckbackend.models.auth.RegisterRequest;
+import dev.arshnirmal.foodtruckbackend.models.user.Role;
+import dev.arshnirmal.foodtruckbackend.models.user.User;
 import dev.arshnirmal.foodtruckbackend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,6 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final FirebaseMessaging firebaseMessaging;
-
 
     public AuthenticationResponse register(RegisterRequest request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
@@ -57,9 +57,7 @@ public class AuthenticationService {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
-                        request.getPassword()
-                )
-        );
+                        request.getPassword()));
 
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
@@ -72,7 +70,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public String reset_password(String email) {
+    public String otpVerification(String email) {
         if (email == null || email.trim().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email is required");
         }
@@ -111,5 +109,20 @@ public class AuthenticationService {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to send notification");
         }
+    }
+
+    public void resetPassword(String email, String password) {
+        if (email == null || email.trim().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email is required");
+        }
+        if (password == null || password.trim().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password is required");
+        }
+
+        var user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
     }
 }

@@ -1,4 +1,4 @@
-package dev.arshnirmal.foodtruckbackend.models;
+package dev.arshnirmal.foodtruckbackend.models.food_item;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -45,13 +45,12 @@ public class FoodItem {
 
     @Column(nullable = false)
     private Integer preparationTime;
-
+    
     private BigDecimal discount;
 
-    private Double averageRating;
+    private Double averageRating; 
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    private NutritionalValue nutritionalValue;
 
-    private Integer calories;
-    private Integer protein;
-    private Integer carbs;
-    private Integer fats;
 }
