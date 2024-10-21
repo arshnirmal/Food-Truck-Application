@@ -24,8 +24,6 @@ public class FoodTruckService {
 
         existingFoodTruck.setName(foodTruck.getName());
         existingFoodTruck.setLocation(foodTruck.getLocation());
-        existingFoodTruck.setLatitude(foodTruck.getLatitude());
-        existingFoodTruck.setLongitude(foodTruck.getLongitude());
 
         foodTruckRepository.save(existingFoodTruck);
     }

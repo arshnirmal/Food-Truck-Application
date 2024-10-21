@@ -45,12 +45,12 @@ public class FoodItem {
 
     @Column(nullable = false)
     private Integer preparationTime;
-    
+
     private BigDecimal discount;
 
-    private Double averageRating; 
-    
-    @OneToOne(cascade = CascadeType.ALL)
+    private Double averageRating;
+
+    @Embedded
     private NutritionalValue nutritionalValue;
 
 }

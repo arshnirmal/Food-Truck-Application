@@ -1,6 +1,7 @@
 package dev.arshnirmal.foodtruckbackend.models.food_truck;
 
 
+import dev.arshnirmal.foodtruckbackend.models.Location;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
