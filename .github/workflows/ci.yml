@@ -38,6 +38,13 @@ jobs:
           echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> $GITHUB_ENV
           echo "DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}" >> $GITHUB_ENV
 
+      - name: Set FIREBASE_CONFIG_BASE64 from GitHub Secrets
+        run: echo "FIREBASE_CONFIG_BASE64=${{ secrets.FIREBASE_CONFIG_BASE64 }}" >> $GITHUB_ENV
+
+      - name: Create Firebase Config File
+        if: env.CURRENT_PROFILE == 'prod'
+        run: echo "$FIREBASE_CONFIG_BASE64" | base64 -d > src/main/resources/food-truck-f524e-firebase-adminsdk-2szft-579d5d1f9c.json
+
       - name: Log in to Docker Hub
         if: env.CURRENT_PROFILE == 'prod'
         run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
@@ -53,13 +60,6 @@ jobs:
       - name: Push Docker image (latest tag)
         if: env.CURRENT_PROFILE == 'prod'
         run: docker push $DOCKER_USERNAME/food-truck:latest
-
-      - name: Set FIREBASE_CONFIG_BASE64 from GitHub Secrets
-        run: echo "FIREBASE_CONFIG_BASE64=${{ secrets.FIREBASE_CONFIG_BASE64 }}" >> $GITHUB_ENV
-
-      - name: Create Firebase Config File
-        if: env.CURRENT_PROFILE == 'prod'
-        run: echo "$FIREBASE_CONFIG_BASE64" | base64 -d > src/main/resources/food-truck-f524e-firebase-adminsdk-2szft-579d5d1f9c.json
 
       - name: Logout from Docker Hub
         if: env.CURRENT_PROFILE == 'prod'
