@@ -16,4 +16,5 @@ class Colorx {
   Color textBlack = const Color(0xFF1E1D1D);
   Color bgWhite = const Color(0xFFF6F6F6);
   Color textBlack3 = const Color(0xFF333333);
+  Color secondaryOrange = const Color(0xFFFFD27C);
 }

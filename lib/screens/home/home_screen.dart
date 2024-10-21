@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_truck/controllers/home_repository.dart';
+import 'package:food_truck/models/coupon.dart';
+import 'package:food_truck/models/food_items/category.dart';
+import 'package:food_truck/models/food_truck/food_truck.dart';
 import 'package:food_truck/resources/res.dart';
 import 'package:food_truck/screens/home/bloc/home_bloc.dart';
+import 'package:food_truck/screens/home/cubit/category_cubit.dart';
+import 'package:food_truck/utils/utils.dart';
+import 'package:food_truck/widgets/coupon_widget.dart';
+import 'package:food_truck/widgets/home_widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,18 +26,21 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: R.colors.white,
-      body: SafeArea(
-        child: BlocProvider(
-          create: (context) => HomeBloc(_homeRepository),
-          child: const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Header(),
-              Greetings(),
-              SearchBar(),
-              Categories(),
-              Body(),
-            ],
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: SafeArea(
+          child: BlocProvider(
+            create: (context) => HomeBloc(_homeRepository),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Header(homeRepository: _homeRepository),
+                const Greetings(),
+                const SearchBar(),
+                Categories(homeRepository: _homeRepository),
+                const Body(),
+              ],
+            ),
           ),
         ),
       ),
@@ -39,7 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class Header extends StatelessWidget {
-  const Header({super.key});
+  final HomeRepository homeRepository;
+  const Header({super.key, required this.homeRepository});
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +78,8 @@ class Header extends StatelessWidget {
                 'DELEVER TO',
                 style: R.textStyles.fz12.merge(R.textStyles.fw700).merge(R.textStyles.fcPrimary),
               ),
-              BlocBuilder<HomeBloc, HomeState>(
+              BlocBuilder<CategoryCubit, CategoryState>(
+                bloc: CategoryCubit(homeRepository),
                 builder: (context, state) {
                   return InkWell(
                     onTap: () {},
@@ -155,7 +167,7 @@ class Greetings extends StatelessWidget {
                   style: R.textStyles.fz16.merge(R.textStyles.fw400).merge(R.textStyles.fcTextBlack),
                 ),
                 TextSpan(
-                  text: 'Good Morning!',
+                  text: 'Good ${greetUser()}!',
                   style: R.textStyles.fz16.merge(R.textStyles.fw700).merge(R.textStyles.fcTextBlack),
                 ),
               ],
@@ -201,7 +213,8 @@ class SearchBar extends StatelessWidget {
 }
 
 class Categories extends StatelessWidget {
-  const Categories({super.key});
+  final HomeRepository homeRepository;
+  const Categories({super.key, required this.homeRepository});
 
   @override
   Widget build(BuildContext context) {
@@ -209,21 +222,56 @@ class Categories extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       child: Column(
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'All Categories',
-                style: R.textStyles.fz20.merge(R.textStyles.fw400).merge(R.textStyles.fcTextBlack2),
-              ),
-              Text(
-                'See All',
-                style: R.textStyles.fz16.merge(R.textStyles.fw400).merge(R.textStyles.fcTextBlack3),
-              ),
-              SvgPicture.asset(
-                R.icons.forwordArrow,
-              ),
-            ],
+          HomeTitleTile(
+            title: 'Categories',
+            onTap: () {},
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          BlocBuilder<CategoryCubit, CategoryState>(
+            bloc: CategoryCubit(homeRepository),
+            builder: (context, state) {
+              return SizedBox(
+                height: 65,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.only(right: 24),
+                  itemCount: 10, // state.categories.length,
+                  itemBuilder: (context, index) {
+                    // final category = state.categories[index]; // TODO: Uncomment this line
+                    final category = Category(
+                      id: index,
+                      name: 'Burger',
+                      imageUrl: 'https://cdn.pixabay.com/photo/2016/03/05/19/02/hamburger-1238246_960_720.jpg',
+                    );
+
+                    if (index == 0) {
+                      return CategoryTile(
+                        onTap: () {
+                          context.read<CategoryCubit>().selectCategory(0);
+                        },
+                        isSelected: state.selectedCategory == 0,
+                        category: Category(
+                          id: 0,
+                          name: 'All',
+                          imageUrl: 'https://cdn.pixabay.com/photo/2016/03/05/19/02/hamburger-1238246_960_720.jpg',
+                        ),
+                      );
+                    }
+
+                    return CategoryTile(
+                      onTap: () {
+                        context.read<CategoryCubit>().selectCategory(category.id);
+                      },
+                      isSelected: state.selectedCategory == category.id,
+                      category: category,
+                    );
+                  },
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -236,6 +284,51 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 16,
+          ),
+          HomeTitleTile(
+            title: 'Open Trucks',
+            onTap: () {
+              showCouponDialog(
+                context,
+                Coupon(code: 'ABC', description: "This is a test coupon"),
+              );
+            },
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: 10,
+            itemBuilder: (context, index) {
+              final foodtruck = FoodTruck(
+                name: 'Burger King',
+                imageUrl: 'https://cdn.pixabay.com/photo/2016/03/05/19/02/hamburger-1238246_960_720.jpg',
+                location: Loaction(
+                  name: 'New York',
+                  latitude: '40.7128',
+                  longitude: '74.0060',
+                ),
+                description: 'Burger King is a fast food restaurant chain that specializes in hamburgers.',
+                rating: 4.5,
+                distance: 2.5,
+                waitingTime: 20,
+              );
+
+              return FoodTruckTile(
+                foodTruck: foodtruck,
+              );
+            },
+          )
+        ],
+      ),
+    );
   }
 }

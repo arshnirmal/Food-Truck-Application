@@ -8,5 +8,9 @@ class Iconx {
   String cartButton = 'assets/icons/cart_button.svg';
   String searchButton = 'assets/icons/search_icon.svg';
   String downArrow = 'assets/icons/down_arrow.svg';
-  String forwordArrow = 'assets/icons/forword_icon.svg';
+  String forwardArrow = 'assets/icons/forward_arrow.svg';
+  String starRating = 'assets/icons/star_rating.svg';
+  String waitingTime = 'assets/icons/waiting_time.svg';
+  String timeToDestination = 'assets/icons/delivery_truck.svg';
+  String couponCloseButton = 'assets/icons/coupon_close_button.svg';
 }

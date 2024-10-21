@@ -65,3 +65,15 @@ void popUntilPath(BuildContext context, String path) {
     context.pop();
   }
 }
+
+String greetUser() {
+  final currentTime = DateTime.now();
+  final hour = currentTime.hour;
+  if (hour < 12) {
+    return 'Morning';
+  } else if (hour < 18) {
+    return 'Aternoon';
+  } else {
+    return 'Evening';
+  }
+}

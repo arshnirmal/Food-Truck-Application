@@ -1,4 +1,5 @@
 import 'package:food_truck/controllers/user_repository.dart';
+import 'package:food_truck/models/food_items/category.dart';
 import 'package:food_truck/services/home_service.dart';
 import 'package:food_truck/utils/injection.dart';
 import 'package:injectable/injectable.dart';
@@ -8,8 +9,8 @@ class HomeRepository {
   final _homeService = getIt<HomeService>();
   final _userRepository = getIt<UserRepository>();
 
-  Future<List<String>> fetchLocations() async {
-    return await _homeService.fetchLocations();
+  Future<List<String>> getLocations() async {
+    return await _homeService.getLocations();
   }
 
   Future<String> getUserName() async {
@@ -17,4 +18,9 @@ class HomeRepository {
 
     return user?.name ?? 'null';
   }
+
+  Future<List<Category>> getCategories() async {
+    return await _homeService.getCategories();
+  }
+
 }

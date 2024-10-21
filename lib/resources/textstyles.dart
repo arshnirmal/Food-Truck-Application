@@ -13,6 +13,10 @@ class TextStyles {
   final TextStyle fz20 = const TextStyle(fontSize: 20);
   final TextStyle fz24 = const TextStyle(fontSize: 24);
   final TextStyle fz30 = const TextStyle(fontSize: 30);
+  final TextStyle fz36 = const TextStyle(fontSize: 36);
+  final TextStyle fz40 = const TextStyle(fontSize: 40);
+  final TextStyle fz48 = const TextStyle(fontSize: 48);
+  final TextStyle fz56 = const TextStyle(fontSize: 56);
 
   final TextStyle fw400 = const TextStyle(fontWeight: FontWeight.w400);
   final TextStyle fw500 = const TextStyle(fontWeight: FontWeight.w500);

@@ -7,4 +7,5 @@ class Images {
   String onboarding3 = 'assets/images/onboarding_3.svg';
   String loginTop = 'assets/images/login_top.svg';
   String loginTop2 = 'assets/images/login_top_2.svg';
+  String couponBackground = 'assets/icons/coupon_background.svg';
 }

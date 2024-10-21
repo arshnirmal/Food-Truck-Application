@@ -1,16 +1,12 @@
 part of 'home_bloc.dart';
 
 sealed class HomeState extends Equatable {
-  final List<String> locations;
-  final String selectedLocation;
   final bool isLoading;
   final String error;
   final int cartCount;
   final String name;
 
   const HomeState({
-    this.locations = const [],
-    this.selectedLocation = '',
     this.isLoading = false,
     this.error = '',
     this.cartCount = 0,
@@ -18,23 +14,16 @@ sealed class HomeState extends Equatable {
   });
 
   @override
-  List<Object> get props => [locations, isLoading, error, selectedLocation, cartCount, name];
+  List<Object> get props => [isLoading, error, cartCount, name];
 }
 
 final class HomeInitial extends HomeState {}
 
 final class HomeLoaded extends HomeState {
-  const HomeLoaded({required super.locations, required super.name});
+  const HomeLoaded({required super.name});
 
   @override
-  List<Object> get props => [locations, name];
-}
-
-final class LocationSelected extends HomeState {
-  const LocationSelected({required super.selectedLocation});
-
-  @override
-  List<Object> get props => [selectedLocation];
+  List<Object> get props => [name];
 }
 
 final class HomeError extends HomeState {
