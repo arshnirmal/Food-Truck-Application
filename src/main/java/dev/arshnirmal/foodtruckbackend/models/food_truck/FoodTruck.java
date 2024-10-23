@@ -1,7 +1,5 @@
 package dev.arshnirmal.foodtruckbackend.models.food_truck;
 
-
-import dev.arshnirmal.foodtruckbackend.models.Location;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,4 +21,6 @@ public class FoodTruck {
 
     @Embedded
     private Location location;
+
+    private String cuisine_type;
 }

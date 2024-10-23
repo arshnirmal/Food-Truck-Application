@@ -85,7 +85,7 @@ public class AuthenticationService {
     private String generateVerificationCode() {
         SecureRandom random = new SecureRandom();
         int code = random.nextInt(999999);
-        return String.format("%06d", code);
+        return "%06d".formatted(code);
     }
 
     private void sendFirebaseNotification(String email, String code) {
