@@ -21,8 +21,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
-
   final AuthenticationRepository _authenticationRepository = AuthenticationRepository();
+  late final AuthBloc _authBloc;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _authBloc = AuthBloc(_authenticationRepository);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +52,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               padding: const EdgeInsets.all(24),
               child: BlocProvider(
-                create: (context) => AuthBloc(_authenticationRepository),
+                create: (context) => _authBloc,
                 child: BlocListener<AuthBloc, AuthState>(
                   listener: (context, state) {
                     if (state is AuthSuccess) {
+                      showSnackBar(context, 'Account created successfully');
                       context.pushNamed(R.routes.home);
                     } else if (state is AuthFailure) {
                       showSnackBar(context, 'Error signing up');
@@ -108,7 +116,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   obscureText: !state.isPasswordVisible,
                   suffixIcon: IconButton(
                     onPressed: () {
-                      context.read<AuthBloc>().add(const TogglePasswordVisibility());
+                      _authBloc.add(const TogglePasswordVisibility());
                     },
                     icon: Icon(
                       state.isPasswordVisible ? Icons.visibility : Icons.visibility_off,
@@ -149,14 +157,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
           isSubmitting: state.isSubmitting,
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              context.read<AuthBloc>().add(
-                    SignUpSubmitted(
-                      name: _nameController.text,
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                      confirmPassword: _confirmPasswordController.text,
-                    ),
-                  );
+              _authBloc.add(
+                SignUpSubmitted(
+                  name: _nameController.text,
+                  email: _emailController.text,
+                  password: _passwordController.text,
+                  confirmPassword: _confirmPasswordController.text,
+                ),
+              );
             }
           },
         );

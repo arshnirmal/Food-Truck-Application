@@ -10,7 +10,11 @@ class HomeRepository {
   final _userRepository = getIt<UserRepository>();
 
   Future<List<String>> getLocations() async {
-    return await _homeService.getLocations();
+    // return await _homeService.getLocations();
+    return await Future.delayed(
+      const Duration(seconds: 1),
+      () => ['Colaba', 'Bandra', 'Andheri', 'Juhu', 'Thane', 'Kandivali', 'Borivali', 'Mira Road'],
+    );
   }
 
   Future<String> getUserName() async {
@@ -22,5 +26,4 @@ class HomeRepository {
   Future<List<Category>> getCategories() async {
     return await _homeService.getCategories();
   }
-
 }

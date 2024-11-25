@@ -5,7 +5,6 @@ import 'package:equatable/equatable.dart';
 import 'package:food_truck/controllers/authentication_repository.dart';
 import 'package:food_truck/controllers/user_repository.dart';
 import 'package:food_truck/models/user.dart';
-import 'package:food_truck/utils/logger.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
@@ -45,7 +44,6 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
   }
 
   Future<void> _onAuthenticationStatusChanged(_AuthenticationStatusChanged event, Emitter<AuthenticationState> emit) async {
-    logD('Status: ${event.status}');
     switch (event.status) {
       case AuthenticationStatus.unauthenticated:
         emit(const AuthenticationFailure());

@@ -8,6 +8,8 @@ import 'package:food_truck/models/food_truck/food_truck.dart';
 import 'package:food_truck/resources/res.dart';
 import 'package:food_truck/screens/home/bloc/home_bloc.dart';
 import 'package:food_truck/screens/home/cubit/category_cubit.dart';
+import 'package:food_truck/screens/home/cubit/location_cubit.dart';
+import 'package:food_truck/utils/logger.dart';
 import 'package:food_truck/utils/utils.dart';
 import 'package:food_truck/widgets/coupon_widget.dart';
 import 'package:food_truck/widgets/home_widgets.dart';
@@ -48,9 +50,23 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class Header extends StatelessWidget {
+class Header extends StatefulWidget {
   final HomeRepository homeRepository;
   const Header({super.key, required this.homeRepository});
+
+  @override
+  State<Header> createState() => _HeaderState();
+}
+
+class _HeaderState extends State<Header> {
+  late final LocationCubit _locationCubit;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _locationCubit = LocationCubit(widget.homeRepository);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,75 +91,83 @@ class Header extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'DELEVER TO',
+                'CURRENT LOCATION',
                 style: R.textStyles.fz12.merge(R.textStyles.fw700).merge(R.textStyles.fcPrimary),
               ),
-              BlocBuilder<CategoryCubit, CategoryState>(
-                bloc: CategoryCubit(homeRepository),
+              BlocBuilder<LocationCubit, LocationState>(
+                bloc: _locationCubit,
                 builder: (context, state) {
-                  return InkWell(
-                    onTap: () {},
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Select Location',
-                          // state.selectedLocation, //TODO: Uncomment this line
-                          style: R.textStyles.fz14.merge(R.textStyles.fw400).merge(R.textStyles.fcTextGrey2),
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        SvgPicture.asset(
-                          R.icons.downArrow,
-                        )
-                      ],
-                    ),
-                  );
+                  if (state is LocationInitial) {
+                    _locationCubit.fetchLocations();
+                  } else if (state is LocationError) {
+                    logE('Failed to fetch locations');
+                    return Text(
+                      'Failed to fetch locations',
+                      style: R.textStyles.fz14.merge(R.textStyles.fw400).merge(R.textStyles.fcTextGrey2),
+                    );
+                  } else if (state is LocationLoading) {
+                    return SizedBox(
+                      height: 4,
+                      width: 64,
+                      child: LinearProgressIndicator(
+                        color: R.colors.primaryColor,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    );
+                  } else if (state is LocationLoaded) {
+                    logD('Locations: ${state.locations} Selected: ${state.selectedLocation}');
+                    return DropdownButton(
+                      value: state.selectedLocation,
+                      padding: const EdgeInsets.all(0),
+                      isDense: true,
+                      hint: Text(
+                        'Select Location',
+                        style: R.textStyles.fz14.merge(R.textStyles.fw400).merge(R.textStyles.fcTextGrey2),
+                      ),
+                      items: state.locations.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: R.textStyles.fz14.merge(R.textStyles.fw400).merge(R.textStyles.fcTextGrey2),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (String? value) {
+                        _locationCubit.selectLocation(value ?? '');
+                      },
+                    );
+                  }
+                  return const SizedBox();
                 },
               ),
             ],
           ),
           const Spacer(),
-          Stack(
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: SvgPicture.asset(
-                  R.icons.cartButton,
+          BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              return Badge(
+                label: Text(
+                  state.cartCount.toString(),
+                  // '2',
+                  style: R.textStyles.fz16.merge(R.textStyles.fw700).merge(R.textStyles.fcWhite),
                 ),
-              ),
-              Positioned(
-                right: 8,
-                top: 4,
-                child: BlocBuilder<HomeBloc, HomeState>(
-                  builder: (context, state) {
-                    if (state.cartCount == 0) {
-                      return const SizedBox();
-                    }
-
-                    return InkWell(
-                      onTap: () {},
-                      child: Container(
-                        width: 25,
-                        height: 25,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: R.colors.primaryColor,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Text(
-                          // state.cartCount.toString(), //TODO: Uncomment this line
-                          '0',
-                          style: R.textStyles.fz16.merge(R.textStyles.fw700).merge(R.textStyles.fcWhite),
-                        ),
-                      ),
-                    );
-                  },
+                isLabelVisible: state.cartCount != 0,
+                alignment: Alignment.topRight,
+                backgroundColor: R.colors.primaryColor,
+                largeSize: 25,
+                offset: const Offset(-8, 8),
+                child: IconButton(
+                  onPressed: () {},
+                  icon: SvgPicture.asset(
+                    R.icons.cartButton,
+                    height: 45,
+                    width: 45,
+                  ),
                 ),
-              )
-            ],
-          )
+              );
+            },
+          ),
         ],
       ),
     );
@@ -218,6 +242,8 @@ class Categories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CategoryCubit categoryCubit = CategoryCubit(homeRepository);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       child: Column(
@@ -230,7 +256,7 @@ class Categories extends StatelessWidget {
             height: 8,
           ),
           BlocBuilder<CategoryCubit, CategoryState>(
-            bloc: CategoryCubit(homeRepository),
+            bloc: categoryCubit,
             builder: (context, state) {
               return SizedBox(
                 height: 65,
@@ -250,7 +276,7 @@ class Categories extends StatelessWidget {
                     if (index == 0) {
                       return CategoryTile(
                         onTap: () {
-                          context.read<CategoryCubit>().selectCategory(0);
+                          categoryCubit.selectCategory(0);
                         },
                         isSelected: state.selectedCategory == 0,
                         category: Category(
@@ -263,7 +289,7 @@ class Categories extends StatelessWidget {
 
                     return CategoryTile(
                       onTap: () {
-                        context.read<CategoryCubit>().selectCategory(category.id);
+                        categoryCubit.selectCategory(category.id);
                       },
                       isSelected: state.selectedCategory == category.id,
                       category: category,

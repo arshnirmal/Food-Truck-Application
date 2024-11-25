@@ -2,22 +2,24 @@ part of 'location_cubit.dart';
 
 sealed class LocationState extends Equatable {
   final List<String> locations;
-  final String selectedLocation;
+  final String? selectedLocation;
   final String error;
   final bool isLoading;
 
   const LocationState({
     this.locations = const [],
-    this.selectedLocation = '',
+    this.selectedLocation,
     this.error = '',
     this.isLoading = false,
   });
 
   @override
-  List<Object> get props => [locations, selectedLocation, error, isLoading];
+  List<Object> get props => [locations, error, isLoading];
 }
 
-final class LocationInitial extends LocationState {}
+final class LocationInitial extends LocationState {
+  const LocationInitial();
+}
 
 final class LocationLoaded extends LocationState {
   const LocationLoaded({
@@ -30,9 +32,6 @@ final class LocationLoaded extends LocationState {
 
 final class LocationSelected extends LocationState {
   const LocationSelected({required super.selectedLocation});
-
-  @override
-  List<Object> get props => [selectedLocation];
 }
 
 final class LocationError extends LocationState {

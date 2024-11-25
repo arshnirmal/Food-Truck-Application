@@ -37,8 +37,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i924.NotificationService>(() => _i924.NotificationService());
     gh.lazySingleton<_i545.AuthenticationRepository>(
         () => _i545.AuthenticationRepository());
-    gh.lazySingleton<_i169.UserRepository>(() => _i169.UserRepository());
     gh.lazySingleton<_i809.HomeRepository>(() => _i809.HomeRepository());
+    gh.lazySingleton<_i169.UserRepository>(() => _i169.UserRepository());
     gh.lazySingleton<_i655.AuthenticationService>(
         () => _i655.AuthenticationService());
     gh.lazySingleton<_i803.HomeService>(() => _i803.HomeService());

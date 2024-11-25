@@ -17,11 +17,17 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
   final AuthenticationRepository _authenticationRepository = AuthenticationRepository();
+  late final AuthBloc _authBloc;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _authBloc = AuthBloc(_authenticationRepository);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               padding: const EdgeInsets.all(24),
               child: BlocProvider(
-                create: (context) => AuthBloc(_authenticationRepository),
+                create: (context) => _authBloc,
                 child: BlocListener<AuthBloc, AuthState>(
                   listener: (context, state) {
                     if (state is AuthSuccess) {
@@ -99,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscureText: !state.isPasswordVisible,
                   suffixIcon: IconButton(
                     onPressed: () {
-                      context.read<AuthBloc>().add(const TogglePasswordVisibility());
+                      _authBloc.add(const TogglePasswordVisibility());
                     },
                     icon: Icon(
                       state.isPasswordVisible ? Icons.visibility : Icons.visibility_off,
@@ -151,12 +157,12 @@ class _LoginScreenState extends State<LoginScreen> {
           isSubmitting: state.isSubmitting,
           onPressed: () async {
             if (_formKey.currentState!.validate()) {
-              context.read<AuthBloc>().add(
-                    LoginSubmitted(
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                    ),
-                  );
+              _authBloc.add(
+                LoginSubmitted(
+                  email: _emailController.text,
+                  password: _passwordController.text,
+                ),
+              );
             }
           },
         );

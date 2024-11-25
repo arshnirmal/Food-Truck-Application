@@ -8,7 +8,6 @@ import 'package:food_truck/utils/utils.dart';
 import 'package:food_truck/widgets/auth_widgets.dart';
 import 'package:go_router/go_router.dart';
 
-// TODO: Implement Forgot Password Screen
 class ForgotPassowordScreen extends StatefulWidget {
   const ForgotPassowordScreen({super.key});
 
@@ -18,10 +17,16 @@ class ForgotPassowordScreen extends StatefulWidget {
 
 class _ForgotPassowordScreenState extends State<ForgotPassowordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   final AuthenticationRepository _authenticationRepository = AuthenticationRepository();
-
   final TextEditingController _emailController = TextEditingController();
+  late final AuthBloc _authBloc;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _authBloc = AuthBloc(_authenticationRepository);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +43,10 @@ class _ForgotPassowordScreenState extends State<ForgotPassowordScreen> {
           ),
           AuthBody(
             child: BlocProvider(
-              create: (context) => AuthBloc(_authenticationRepository),
+              create: (context) => _authBloc,
               child: BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, state) {
-                  return _sendEmailForm(context, state);
+                  return _sendEmailForm();
                 },
               ),
             ),
@@ -51,7 +56,7 @@ class _ForgotPassowordScreenState extends State<ForgotPassowordScreen> {
     );
   }
 
-  _sendEmailForm(BuildContext context, AuthState state) {
+  _sendEmailForm() {
     return Form(
       key: _formKey,
       child: SingleChildScrollView(
@@ -72,11 +77,11 @@ class _ForgotPassowordScreenState extends State<ForgotPassowordScreen> {
               text: 'Send Email',
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  context.read<AuthBloc>().add(ForgotPasswordSubmitted(_emailController.text));
+                  _authBloc.add(ForgotPasswordSubmitted(_emailController.text));
                 }
                 context.push(R.routes.optVerification, extra: _emailController.text);
               },
-              isSubmitting: state.isSubmitting,
+              isSubmitting: _authBloc.state.isSubmitting,
             ),
           ],
         ),
@@ -95,11 +100,17 @@ class OtpVerificationScreen extends StatefulWidget {
 
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   final GlobalKey<FormState> _otpFormKey = GlobalKey<FormState>();
-
   final AuthenticationRepository _authenticationRepository = AuthenticationRepository();
   final Ticker _ticker = const Ticker();
-
   final List<String> _otp = List.generate(4, (index) => '');
+  late final AuthBloc _authBloc;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _authBloc = AuthBloc(_authenticationRepository, ticker: _ticker);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,8 +128,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
           ),
           AuthBody(
             child: BlocProvider(
-              create: (context) => AuthBloc(_authenticationRepository, ticker: _ticker),
-              child: _verifyOtpForm(context),
+              create: (context) => _authBloc,
+              child: _verifyOtpForm(),
             ),
           )
         ],
@@ -164,7 +175,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     );
   }
 
-  _verifyOtpForm(BuildContext context) {
+  _verifyOtpForm() {
     return Form(
       key: _otpFormKey,
       child: SingleChildScrollView(
@@ -181,7 +192,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     children: [
                       InkWell(
                         onTap: () {
-                          context.read<AuthBloc>().add(ForgotPasswordSubmitted(widget.email));
+                          _authBloc.add(ForgotPasswordSubmitted(widget.email));
                         },
                         child: Text(
                           'Resend',
@@ -194,7 +205,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       ),
                       BlocBuilder<AuthBloc, AuthState>(
                         builder: (context, state) {
-                          context.read<AuthBloc>().add(OtpTimerStarted(state.otpTimer));
+                          _authBloc.add(OtpTimerStarted(state.otpTimer));
                           return Text(
                             '${state.otpTimer}sec',
                             style: R.textStyles.fz14.merge(R.textStyles.fw700).merge(R.textStyles.fcTextBlack2),
@@ -218,7 +229,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               text: 'VERIFY',
               onPressed: () {
                 if (_otpFormKey.currentState!.validate()) {
-                  context.read<AuthBloc>().add(VerifyOtpSubmitted(widget.email, _otp.join()));
+                  _authBloc.add(VerifyOtpSubmitted(widget.email, _otp.join()));
                 }
               },
             ),

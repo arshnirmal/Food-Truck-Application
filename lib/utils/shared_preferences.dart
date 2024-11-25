@@ -1,7 +1,7 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:food_truck/models/user.dart';
-import 'package:food_truck/utils/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesUser {
@@ -13,7 +13,7 @@ class SharedPreferencesUser {
 
   Future<User?> getUser() async {
     final user = await _sharedPreferencesAsync.getString('user');
-    logE('User: $user');
+    log('User: $user');
     if (user != null) {
       return User.fromJson(jsonDecode(user));
     }
