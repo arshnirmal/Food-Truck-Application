@@ -1,5 +1,5 @@
-import 'package:food_truck/models/user.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:urban_bites/models/user.dart';
 
 part 'auth_models.g.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_truck/resources/res.dart';
+import 'package:urban_bites/resources/res.dart';
 
 class TextStyles {
   final TextStyle fontPrimary = TextStyle(fontFamily: R.fonts.primaryFont);

@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:food_truck/controllers/authentication_repository.dart';
-import 'package:food_truck/utils/ticker.dart' as ticker;
+import 'package:urban_bites/controllers/authentication_repository.dart';
+import 'package:urban_bites/utils/ticker.dart' as ticker;
 
 part 'auth_event.dart';
 part 'auth_state.dart';

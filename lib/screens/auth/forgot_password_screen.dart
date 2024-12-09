@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_truck/controllers/authentication_repository.dart';
-import 'package:food_truck/resources/res.dart';
-import 'package:food_truck/screens/auth/bloc/auth_bloc.dart';
-import 'package:food_truck/utils/ticker.dart';
-import 'package:food_truck/utils/utils.dart';
-import 'package:food_truck/widgets/auth_widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:urban_bites/controllers/authentication_repository.dart';
+import 'package:urban_bites/resources/res.dart';
+import 'package:urban_bites/screens/auth/bloc/auth_bloc.dart';
+import 'package:urban_bites/utils/ticker.dart';
+import 'package:urban_bites/utils/utils.dart';
+import 'package:urban_bites/widgets/auth_widgets.dart';
 
-class ForgotPassowordScreen extends StatefulWidget {
-  const ForgotPassowordScreen({super.key});
+class ForgotPasswordScreen extends StatefulWidget {
+  const ForgotPasswordScreen({super.key});
 
   @override
-  State<ForgotPassowordScreen> createState() => _ForgotPassowordScreenState();
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
-class _ForgotPassowordScreenState extends State<ForgotPassowordScreen> {
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final AuthenticationRepository _authenticationRepository = AuthenticationRepository();
   final TextEditingController _emailController = TextEditingController();

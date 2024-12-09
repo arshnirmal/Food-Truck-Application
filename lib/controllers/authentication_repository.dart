@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:food_truck/controllers/user_repository.dart';
-import 'package:food_truck/models/auth/auth_models.dart';
-import 'package:food_truck/services/auth_service.dart';
-import 'package:food_truck/utils/injection.dart';
-import 'package:food_truck/utils/logger.dart';
-import 'package:food_truck/utils/secure_storage.dart';
 import 'package:injectable/injectable.dart';
+import 'package:urban_bites/controllers/user_repository.dart';
+import 'package:urban_bites/models/auth/auth_models.dart';
+import 'package:urban_bites/services/auth_service.dart';
+import 'package:urban_bites/utils/injection.dart';
+import 'package:urban_bites/utils/logger.dart';
+import 'package:urban_bites/utils/secure_storage.dart';
 
 enum AuthenticationStatus { unknown, authenticated, unauthenticated }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:food_truck/resources/res.dart';
+import 'package:urban_bites/resources/res.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

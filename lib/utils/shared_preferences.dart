@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:food_truck/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:urban_bites/models/user.dart';
 
 class SharedPreferencesUser {
   final SharedPreferencesAsync _sharedPreferencesAsync = SharedPreferencesAsync();

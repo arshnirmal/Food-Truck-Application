@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:food_truck/controllers/home_repository.dart';
-import 'package:food_truck/models/coupon.dart';
-import 'package:food_truck/models/food_items/category.dart';
-import 'package:food_truck/models/food_truck/food_truck.dart';
-import 'package:food_truck/resources/res.dart';
-import 'package:food_truck/screens/home/bloc/home_bloc.dart';
-import 'package:food_truck/screens/home/cubit/category_cubit.dart';
-import 'package:food_truck/screens/home/cubit/location_cubit.dart';
-import 'package:food_truck/utils/logger.dart';
-import 'package:food_truck/utils/utils.dart';
-import 'package:food_truck/widgets/coupon_widget.dart';
-import 'package:food_truck/widgets/home_widgets.dart';
+import 'package:urban_bites/controllers/home_repository.dart';
+import 'package:urban_bites/models/coupon.dart';
+import 'package:urban_bites/models/food_items/category.dart';
+import 'package:urban_bites/models/food_truck/food_truck.dart';
+import 'package:urban_bites/resources/res.dart';
+import 'package:urban_bites/screens/home/bloc/home_bloc.dart';
+import 'package:urban_bites/screens/home/cubit/category_cubit.dart';
+import 'package:urban_bites/screens/home/cubit/location_cubit.dart';
+import 'package:urban_bites/utils/logger.dart';
+import 'package:urban_bites/utils/utils.dart';
+import 'package:urban_bites/widgets/coupon_widget.dart';
+import 'package:urban_bites/widgets/home_widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -115,7 +115,6 @@ class _HeaderState extends State<Header> {
                       ),
                     );
                   } else if (state is LocationLoaded) {
-                    logD('Locations: ${state.locations} Selected: ${state.selectedLocation}');
                     return DropdownButton(
                       value: state.selectedLocation,
                       padding: const EdgeInsets.all(0),
@@ -337,7 +336,7 @@ class Body extends StatelessWidget {
               final foodtruck = FoodTruck(
                 name: 'Burger King',
                 imageUrl: 'https://cdn.pixabay.com/photo/2016/03/05/19/02/hamburger-1238246_960_720.jpg',
-                location: Loaction(
+                location: Location(
                   name: 'New York',
                   latitude: '40.7128',
                   longitude: '74.0060',

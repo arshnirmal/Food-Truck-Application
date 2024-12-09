@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:food_truck/models/food_items/category.dart';
-import 'package:food_truck/utils/dio_client.dart';
-import 'package:food_truck/utils/injection.dart';
 import 'package:injectable/injectable.dart';
+import 'package:urban_bites/models/food_items/category.dart';
+import 'package:urban_bites/utils/dio_client.dart';
+import 'package:urban_bites/utils/injection.dart';
 
 @lazySingleton
 class HomeService {

@@ -3,18 +3,18 @@ import 'package:json_annotation/json_annotation.dart';
 part 'food_truck.g.dart';
 
 @JsonSerializable(createFactory: true, createToJson: true)
-class Loaction {
+class Location {
   String name;
   String latitude;
   String longitude;
 
-  Loaction({
+  Location({
     required this.name,
     required this.latitude,
     required this.longitude,
   });
 
-  factory Loaction.fromJson(Map<String, dynamic> json) => _$LoactionFromJson(json);
+  factory Location.fromJson(Map<String, dynamic> json) => _$LoactionFromJson(json);
   Map<String, dynamic> toJson() => _$LoactionToJson(this);
 }
 
@@ -22,7 +22,7 @@ class Loaction {
 class FoodTruck {
   String name;
   String imageUrl;
-  Loaction location;
+  Location location;
   String description;
   double rating;
   double distance;

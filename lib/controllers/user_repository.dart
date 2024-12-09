@@ -1,6 +1,6 @@
-import 'package:food_truck/models/user.dart';
-import 'package:food_truck/utils/shared_preferences.dart';
 import 'package:injectable/injectable.dart';
+import 'package:urban_bites/models/user.dart';
+import 'package:urban_bites/utils/shared_preferences.dart';
 
 @lazySingleton
 class UserRepository {

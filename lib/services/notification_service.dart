@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:food_truck/utils/secure_storage.dart';
 import 'package:injectable/injectable.dart';
+import 'package:urban_bites/utils/secure_storage.dart';
 
 @singleton
 class NotificationService {

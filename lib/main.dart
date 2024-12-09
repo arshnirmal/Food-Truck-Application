@@ -4,13 +4,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_truck/controllers/authentication_repository.dart';
-import 'package:food_truck/controllers/user_repository.dart';
-import 'package:food_truck/resources/res.dart';
-import 'package:food_truck/screens/auth/bloc/authentication_bloc.dart';
-import 'package:food_truck/services/notification_service.dart';
-import 'package:food_truck/utils/app_config.dart';
-import 'package:food_truck/utils/injection.dart';
+import 'package:urban_bites/controllers/authentication_repository.dart';
+import 'package:urban_bites/controllers/user_repository.dart';
+import 'package:urban_bites/resources/res.dart';
+import 'package:urban_bites/screens/auth/bloc/authentication_bloc.dart';
+import 'package:urban_bites/services/notification_service.dart';
+import 'package:urban_bites/utils/app_config.dart';
+import 'package:urban_bites/utils/injection.dart';
 
 import 'firebase_options.dart';
 

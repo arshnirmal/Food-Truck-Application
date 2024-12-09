@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:food_truck/resources/res.dart';
-import 'package:food_truck/screens/auth/forgot_passowrd_screen.dart';
-import 'package:food_truck/screens/auth/login_screen.dart';
-import 'package:food_truck/screens/auth/signup_sceen.dart';
-import 'package:food_truck/screens/home/home_screen.dart';
-import 'package:food_truck/screens/onboarding/onboarding_screen.dart';
-import 'package:food_truck/screens/onboarding/splash_screen.dart';
 import 'package:go_router/go_router.dart';
+import 'package:urban_bites/resources/res.dart';
+import 'package:urban_bites/screens/auth/forgot_password_screen.dart';
+import 'package:urban_bites/screens/auth/login_screen.dart';
+import 'package:urban_bites/screens/auth/signup_screen.dart';
+import 'package:urban_bites/screens/home/home_screen.dart';
+import 'package:urban_bites/screens/onboarding/onboarding_screen.dart';
+import 'package:urban_bites/screens/onboarding/splash_screen.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -35,7 +35,7 @@ class AppRouter {
           GoRoute(
             name: R.routes.forgotPassword,
             path: R.routes.forgotPassword,
-            builder: (context, state) => const ForgotPassowordScreen(),
+            builder: (context, state) => const ForgotPasswordScreen(),
           ),
           GoRoute(
             name: R.routes.optVerification,

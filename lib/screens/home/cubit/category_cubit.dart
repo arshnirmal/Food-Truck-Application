@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:food_truck/controllers/home_repository.dart';
-import 'package:food_truck/models/food_items/category.dart';
+import 'package:urban_bites/controllers/home_repository.dart';
+import 'package:urban_bites/models/food_items/category.dart';
 
 part 'category_state.dart';
 

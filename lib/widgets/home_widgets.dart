@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:food_truck/models/food_items/category.dart';
-import 'package:food_truck/models/food_truck/food_truck.dart';
-import 'package:food_truck/resources/res.dart';
+import 'package:urban_bites/models/food_items/category.dart';
+import 'package:urban_bites/models/food_truck/food_truck.dart';
+import 'package:urban_bites/resources/res.dart';
 
 class CategoryTile extends StatelessWidget {
   final Category category;

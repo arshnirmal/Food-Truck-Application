@@ -1,10 +1,10 @@
-import 'package:food_truck/resources/colors.dart';
-import 'package:food_truck/resources/fonts.dart';
-import 'package:food_truck/resources/icons.dart';
-import 'package:food_truck/resources/images.dart';
-import 'package:food_truck/resources/routes.dart';
-import 'package:food_truck/resources/strings.dart';
-import 'package:food_truck/resources/textstyles.dart';
+import 'package:urban_bites/resources/colors.dart';
+import 'package:urban_bites/resources/fonts.dart';
+import 'package:urban_bites/resources/icons.dart';
+import 'package:urban_bites/resources/images.dart';
+import 'package:urban_bites/resources/routes.dart';
+import 'package:urban_bites/resources/strings.dart';
+import 'package:urban_bites/resources/textstyles.dart';
 
 class R {
   static Images images = Images();

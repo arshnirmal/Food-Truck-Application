@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:food_truck/models/order.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:urban_bites/models/order.dart';
 
 part 'user.g.dart';
 

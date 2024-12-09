@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food_truck/resources/res.dart';
-import 'package:food_truck/widgets/auth_widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:urban_bites/resources/res.dart';
+import 'package:urban_bites/widgets/auth_widgets.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});

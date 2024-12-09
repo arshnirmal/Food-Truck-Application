@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:food_truck/models/auth/auth_models.dart';
-import 'package:food_truck/services/notification_service.dart';
-import 'package:food_truck/utils/dio_client.dart';
-import 'package:food_truck/utils/injection.dart';
-import 'package:food_truck/utils/logger.dart';
 import 'package:injectable/injectable.dart';
+import 'package:urban_bites/models/auth/auth_models.dart';
+import 'package:urban_bites/services/notification_service.dart';
+import 'package:urban_bites/utils/dio_client.dart';
+import 'package:urban_bites/utils/injection.dart';
+import 'package:urban_bites/utils/logger.dart';
 
 @lazySingleton
 class AuthenticationService {

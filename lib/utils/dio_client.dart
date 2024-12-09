@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:food_truck/utils/logger.dart';
-import 'package:food_truck/utils/secure_storage.dart';
 import 'package:injectable/injectable.dart';
+import 'package:urban_bites/utils/logger.dart';
+import 'package:urban_bites/utils/secure_storage.dart';
 
 @singleton
 class DioClient {

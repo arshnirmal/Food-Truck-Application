@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:food_truck/controllers/home_repository.dart';
-import 'package:food_truck/utils/logger.dart';
+import 'package:urban_bites/controllers/home_repository.dart';
+import 'package:urban_bites/utils/logger.dart';
 
 part 'location_state.dart';
 

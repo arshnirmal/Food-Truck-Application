@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_truck/controllers/authentication_repository.dart';
-import 'package:food_truck/resources/res.dart';
-import 'package:food_truck/screens/auth/bloc/auth_bloc.dart';
-import 'package:food_truck/utils/utils.dart';
-import 'package:food_truck/widgets/auth_widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:urban_bites/controllers/authentication_repository.dart';
+import 'package:urban_bites/resources/res.dart';
+import 'package:urban_bites/screens/auth/bloc/auth_bloc.dart';
+import 'package:urban_bites/utils/utils.dart';
+import 'package:urban_bites/widgets/auth_widgets.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

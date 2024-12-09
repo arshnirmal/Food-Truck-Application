@@ -1,8 +1,8 @@
-import 'package:food_truck/controllers/user_repository.dart';
-import 'package:food_truck/models/food_items/category.dart';
-import 'package:food_truck/services/home_service.dart';
-import 'package:food_truck/utils/injection.dart';
 import 'package:injectable/injectable.dart';
+import 'package:urban_bites/controllers/user_repository.dart';
+import 'package:urban_bites/models/food_items/category.dart';
+import 'package:urban_bites/services/home_service.dart';
+import 'package:urban_bites/utils/injection.dart';
 
 @lazySingleton
 class HomeRepository {

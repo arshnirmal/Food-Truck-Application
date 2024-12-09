@@ -1,7 +1,7 @@
-import 'package:food_truck/resources/res.dart';
-import 'package:food_truck/utils/injection.config.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'package:urban_bites/resources/res.dart';
+import 'package:urban_bites/utils/injection.config.dart';
 
 final GetIt getIt = GetIt.instance;
 
